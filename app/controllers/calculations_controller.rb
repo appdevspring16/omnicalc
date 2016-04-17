@@ -4,20 +4,24 @@ class CalculationsController < ApplicationController
     @text = params[:user_text]
     @special_word = params[:user_word]
 
-    # ================================================================================
-    # Your code goes below.
-    # The text the user input is in the string @text.
-    # The special word the user input is in the string @special_word.
-    # ================================================================================
+    character_count_with_spaces = @text.length
+
+    character_count_without_spaces = @text.gsub(" ","").length
+
+    if @text.include?(@special_word)
+      occurences = @text.split.count(@special_word)
+    else
+    end
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = character_count_with_spaces
 
-    @word_count = "Replace this string with your answer."
+    @character_count_without_spaces = character_count_without_spaces
 
-    @occurrences = "Replace this string with your answer."
+    @word_count = @text.split.count
+
+    @occurrences = occurences
 
     # ================================================================================
     # Your code goes above.
@@ -31,14 +35,14 @@ class CalculationsController < ApplicationController
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
 
-    # ================================================================================
-    # Your code goes below.
-    # The annual percentage rate the user input is in the decimal @apr.
-    # The number of years the user input is in the integer @years.
-    # The principal value the user input is in the decimal @principal.
-    # ================================================================================
+  monthlyinterest = @apr/100/12
+  months = @years*12
 
-    @monthly_payment = "Replace this string with your answer."
+  monthly_payment = (monthlyinterest*@principal*(1+monthlyinterest)**months)/((1+monthlyinterest)**months-1)
+
+
+
+    @monthly_payment = monthly_payment
 
     # ================================================================================
     # Your code goes above.
@@ -51,21 +55,17 @@ class CalculationsController < ApplicationController
     @starting = Chronic.parse(params[:starting_time])
     @ending = Chronic.parse(params[:ending_time])
 
-    # ================================================================================
-    # Your code goes below.
-    # The start time is in the Time @starting.
-    # The end time is in the Time @ending.
-    # Note: Ruby stores Times in terms of seconds since Jan 1, 1970.
-    #   So if you subtract one time from another, you will get an integer
-    #   number of seconds as a result.
-    # ================================================================================
+    starting = @starting.to_f
+  ending = @ending.to_f
+  difference = ending - starting
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+
+    @seconds = difference
+    @minutes = difference / 60
+    @hours = difference / 3600
+    @days = difference / 3600 / 24
+    @weeks = difference/ 3600 / 24/ 7
+    @years = difference / 3600/ 24/ 7/ (365.25/7)
 
     # ================================================================================
     # Your code goes above.
@@ -77,32 +77,95 @@ class CalculationsController < ApplicationController
   def descriptive_statistics
     @numbers = params[:list_of_numbers].gsub(',', '').split.map(&:to_f)
 
-    # ================================================================================
-    # Your code goes below.
-    # The numbers the user input are in the array @numbers.
-    # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    def sorted_numbers(list_of_numbers)
+    list_of_numbers.sort
+    end
 
-    @count = "Replace this string with your answer."
+    def count(list_of_numbers)
+    list_of_numbers.count
+    end
 
-    @minimum = "Replace this string with your answer."
+    def min(list_of_numbers)
+    list_of_numbers.sort[0]
+    end
 
-    @maximum = "Replace this string with your answer."
+      def max(list_of_numbers)
+    list_of_numbers.sort[list_of_numbers.length-1]
+    end
 
-    @range = "Replace this string with your answer."
+    def range(list_of_numbers)
+    max(list_of_numbers) - min(list_of_numbers)
+    end
 
-    @median = "Replace this string with your answer."
+    def median(list_of_numbers)
+      if (list_of_numbers.count).odd?
+        list_of_numbers.sort[list_of_numbers.count/2]
+      else
+    ((list_of_numbers.sort[list_of_numbers.count/2])+(list_of_numbers.sort[list_of_numbers.count/2-1]))/2
+      end
+    end
 
-    @sum = "Replace this string with your answer."
 
-    @mean = "Replace this string with your answer."
+    def sum(list_of_numbers)
+      running_total = 0
+      list_of_numbers.each do |number|
+        running_total = running_total + number
+      end
 
-    @variance = "Replace this string with your answer."
+      return running_total
+    end
 
-    @standard_deviation = "Replace this string with your answer."
 
-    @mode = "Replace this string with your answer."
+    def mean(list_of_numbers)
+
+    return (sum(list_of_numbers)*10.0/10.0/list_of_numbers.length)
+    end
+
+    def variance(list_of_numbers)
+      squaredsum = 0
+      list_of_numbers.each do |number|
+       squaredsum = squaredsum + ((number - mean(list_of_numbers))**2)
+      end
+    return squaredsum/list_of_numbers.length
+    end
+
+    def standard_deviation(list_of_numbers)
+      variance(list_of_numbers)**0.5
+    end
+
+    def mode(list_of_numbers)
+      counter = Hash.new (0)
+      list_of_numbers.each do |i|
+        counter[i] = counter[i]+1
+      end
+    counter.key(counter.values.max)
+    end
+
+
+
+
+    @sorted_numbers = sorted_numbers(@numbers)
+
+    @count = count(@numbers)
+
+    @minimum = min(@numbers)
+
+    @maximum = max(@numbers)
+
+    @range = range(@numbers)
+
+    @median = median(@numbers)
+
+    @sum = sum(@numbers)
+
+    @mean = mean(@numbers)
+
+    @variance = variance(@numbers)
+
+    @standard_deviation = standard_deviation(@numbers)
+
+    @mode = mode(@numbers)
 
     # ================================================================================
     # Your code goes above.
