@@ -4,18 +4,20 @@ class CalculationsController < ApplicationController
     @text = params[:user_text]
     @special_word = params[:user_word]
 
-    # ================================================================================
-    # Your code goes below.
-    # The text the user input is in the string @text.
-    # The special word the user input is in the string @special_word.
-    # ================================================================================
+    @character_count_with_spaces = @text.length
 
+    no_space = @text.gsub(" ","")
+    @character_count_without_spaces = no_space.length
 
-    @character_count_with_spaces = "Replace this string with your answer."
-
-    @character_count_without_spaces = "Replace this string with your answer."
-
-    @word_count = "Replace this string with your answer."
+    x = 0
+    count = 0
+    while x < @text.length
+      if @text[x] == " "
+        count = count + 1
+      end
+      x = x + 1
+    end
+    @word_count = count + 1
 
     @occurrences = "Replace this string with your answer."
 
@@ -31,14 +33,10 @@ class CalculationsController < ApplicationController
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
 
-    # ================================================================================
-    # Your code goes below.
-    # The annual percentage rate the user input is in the decimal @apr.
-    # The number of years the user input is in the integer @years.
-    # The principal value the user input is in the decimal @principal.
-    # ================================================================================
+    denom = 1 - ((1 + (@apr/100))**(-1*@years))
 
-    @monthly_payment = "Replace this string with your answer."
+
+    @monthly_payment = (((@apr/100)/denom)*@principal)/12
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +58,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52.1429
 
     # ================================================================================
     # Your code goes above.
@@ -77,30 +75,45 @@ class CalculationsController < ApplicationController
   def descriptive_statistics
     @numbers = params[:list_of_numbers].gsub(',', '').split.map(&:to_f)
 
-    # ================================================================================
-    # Your code goes below.
-    # The numbers the user input are in the array @numbers.
-    # ================================================================================
-
     @sorted_numbers = "Replace this string with your answer."
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
 
-    @sum = "Replace this string with your answer."
 
-    @mean = "Replace this string with your answer."
+    ## REMEMBER TO PUT AT SORTED!!!!!!
 
-    @variance = "Replace this string with your answer."
 
-    @standard_deviation = "Replace this string with your answer."
+    if @count.odd? == true
+      @median = (@count/2)+1.to_f
+    else
+      @median = (@numbers[@count/2] + @numbers[(@count/2)-1])/2
+    end
+
+
+    part_total = 0
+    @numbers.each do |number|
+      part_total = part_total + number
+    end
+
+    @sum = part_total
+
+    @mean = @sum / @count
+
+    sq_diff = 0
+    @numbers.each do |number|
+      sq_diff = sq_diff + (number-@mean)**2
+    end
+
+    @variance = sq_diff / @count
+
+    @standard_deviation = @variance**0.5
 
     @mode = "Replace this string with your answer."
 
