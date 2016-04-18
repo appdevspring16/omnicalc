@@ -11,13 +11,16 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text.gsub(' ','').length
 
-    @word_count = "Replace this string with your answer."
+    wordsarray = @text.split(' ')
 
-    @occurrences = "Replace this string with your answer."
+    @word_count = wordsarray.length
+
+    @occurrences = @text.scan(/#{@special_word}/).length
+    #  @occurrences = @special_word.class
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +41,13 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    mrate = @apr/(12*100)
+    period = @years*12
+    numerator = mrate*@principal
+    denominator = 1-(1+mrate)**period
+    @monthly_payment = -numerator/denominator
+
+    # @monthly_payment = "Replace this string with your answer."
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +69,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending-@starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
