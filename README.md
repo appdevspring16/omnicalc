@@ -18,10 +18,10 @@ It is a collection of calculators that do various things; count the number of wo
 
  1. Clone this repo, and **then create a branch for your work**.
  1. Navigate to the folder you downloaded in Terminal.
- 1. Open up the entire folder in Atom.
+ 1. Open up the entire folder in Atom. aaa
  1. In Terminal,
 
-        bundle install
+        bundle install 
 
  1. **If you receive an error on the `bundle install`, let us know right away.**
  1. Once that is complete,
