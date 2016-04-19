@@ -17,9 +17,71 @@ class CalculationsController < ApplicationController
       end
       x = x + 1
     end
-    @word_count = count + 1
 
-    @occurrences = "Replace this string with your answer."
+    if @text[@text.length-1] == " "
+      @word_count = count
+    else
+      @word_count = count + 1
+    end
+
+    temp_text = @text.downcase
+    @special_word = @special_word.downcase
+
+    temp_text = temp_text.gsub(".","")
+    temp_text = temp_text.gsub(",","")
+    temp_text = temp_text.gsub("!","")
+    temp_text = temp_text.gsub("?","")
+
+    if temp_text.include?(@special_word)
+      x = 0
+      space_locs = Array.new
+      while x < temp_text.length
+        if temp_text[x] == " "
+          space_locs.push(x)
+        end
+        x = x + 1
+      end
+
+      # THIS ISN'T WORKING
+      if temp_text[temp_text.length-1] == " "
+        space_locs.pop
+      end
+
+      x = 0
+      words = Array.new
+      while x < space_locs.length + 1
+        if x == 0
+          words[x] = temp_text[0..space_locs[x]-1]
+        elsif x == space_locs.length
+          wstart = space_locs[x-1]
+          wstart = wstart.to_i
+          wstart = wstart + 1
+          wend = temp_text.length-1
+          words[x] = temp_text[wstart..wend]
+        else
+          wstart = space_locs[x-1]
+          wstart = wstart.to_i
+          wstart = wstart + 1
+          wstop = space_locs[x]
+          wstop = wstop.to_i
+          wstop = wstop - 1
+          words[x] = temp_text[wstart..wstop]
+        end
+        x = x + 1
+      end
+
+      special_count = 0
+      words.each do |word|
+        if word == @special_word
+          special_count = special_count + 1
+        end
+      end
+      @occurrences = special_count
+    else
+      @occurrences = 0
+    end
+
+    #@occurrences = "Replace this string with your answer."
 
     # ================================================================================
     # Your code goes above.
@@ -37,10 +99,6 @@ class CalculationsController < ApplicationController
 
 
     @monthly_payment = (((@apr/100)/denom)*@principal)/12
-
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
 
     render("loan_payment.html.erb")
   end
@@ -75,7 +133,7 @@ class CalculationsController < ApplicationController
   def descriptive_statistics
     @numbers = params[:list_of_numbers].gsub(',', '').split.map(&:to_f)
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
     @count = @numbers.length
 
@@ -85,17 +143,11 @@ class CalculationsController < ApplicationController
 
     @range = @maximum - @minimum
 
-
-
-    ## REMEMBER TO PUT AT SORTED!!!!!!
-
-
     if @count.odd? == true
       @median = (@count/2)+1.to_f
     else
-      @median = (@numbers[@count/2] + @numbers[(@count/2)-1])/2
+      @median = (@sorted_numbers[@count/2] + @sorted_numbers[(@count/2)-1])/2
     end
-
 
     part_total = 0
     @numbers.each do |number|
