@@ -42,10 +42,10 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
     mrate = @apr/(12*100)
-    period = @years*12
+    period = -@years*12
     numerator = mrate*@principal
     denominator = 1-(1+mrate)**period
-    @monthly_payment = -numerator/denominator
+    @monthly_payment = numerator/denominator
 
     # @monthly_payment = "Replace this string with your answer."
 
@@ -91,27 +91,61 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @numbers.max-@numbers.min
 
-    @median = "Replace this string with your answer."
+    arraysize =  @numbers.sort.length
+    if @numbers.sort.length%2 == 1
+      midindex = arraysize/2
+      @median = @numbers.sort[midindex]
+    else  midindexlo = arraysize/2.round-1
+      midindexhi = midindexlo+1
+      @median = (@numbers.sort[midindexhi]+@numbers.sort[midindexlo])/2
+    end
 
-    @sum = "Replace this string with your answer."
+    # @median = median
 
-    @mean = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @variance = "Replace this string with your answer."
+    @mean = @numbers.sum/@numbers.count
 
-    @standard_deviation = "Replace this string with your answer."
+    devs = []
+    mean = @mean
+    numbers = @numbers
+    numbers.each do |the_number|
+      dev = the_number - mean
+      devs.push(dev)
+    end
 
-    @mode = "Replace this string with your answer."
+    sqrdevs = []
+    devs.each do |the_dev|
+      sqrdev = the_dev*the_dev
+      sqrdevs.push(sqrdev)
+    end
+
+    @variance=sqrdevs.sum/sqrdevs.length
+
+    # @variance = "Replace this string with your answer."
+
+    @standard_deviation = Math.sqrt(@variance)
+
+sorted=@numbers.sort
+def stringize(my_array)
+  stringized=[]
+  my_array.each do |elems|
+    stringized.push(elems.to_s)
+  end
+  return stringized
+end
+
+    # @mode = "Replace this string with your answer."
 
     # ================================================================================
     # Your code goes above.
