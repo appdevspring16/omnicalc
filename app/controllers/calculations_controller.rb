@@ -4,6 +4,8 @@ class CalculationsController < ApplicationController
     @text = params[:user_text]
     @special_word = params[:user_word]
 
+    @text = @text.gsub("\n","")
+
     @character_count_with_spaces = @text.length
 
     no_space = @text.gsub(" ","")
