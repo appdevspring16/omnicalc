@@ -2,7 +2,7 @@ class CalculationsController < ApplicationController
 
   def word_count
     @text = params[:user_text]
-    @special_word = params[:user_word]
+    @special_word = params[:user_word].downcase
 
     # ================================================================================
     # Your code goes below.
@@ -11,13 +11,13 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text.gsub(/\s+/,"").length
 
-    @word_count = "Replace this string with your answer."
+    @word_count = @text.split(/\W+/).length
 
-    @occurrences = "Replace this string with your answer."
+    @occurrences = @text.downcase.split(/\W+/).count(@special_word)
 
     # ================================================================================
     # Your code goes above.
