@@ -55,25 +55,12 @@ class CalculationsController < ApplicationController
     @starting = Chronic.parse(params[:starting_time])
     @ending = Chronic.parse(params[:ending_time])
 
-    # ================================================================================
-    # Your code goes below.
-    # The start time is in the Time @starting.
-    # The end time is in the Time @ending.
-    # Note: Ruby stores Times in terms of seconds since Jan 1, 1970.
-    #   So if you subtract one time from another, you will get an integer
-    #   number of seconds as a result.
-    # ================================================================================
-
     @seconds = @ending - @starting
     @minutes = @seconds/60
     @hours = @minutes/60
     @days = @hours/24
     @weeks = @days/7
     @years = @weeks/52.1429
-
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
 
     render("time_between.html.erb")
   end
@@ -115,11 +102,14 @@ class CalculationsController < ApplicationController
 
     @standard_deviation = @variance**0.5
 
-    @mode = "Replace this string with your answer."
-
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    max_count = 0
+    @mode = 0
+    @sorted_numbers.each do |number|
+      if @sorted_numbers.count(number) > max_count
+        max_count = @sorted_numbers.count(number)
+        @mode = number
+      end
+    end
 
     render("descriptive_statistics.html.erb")
   end
