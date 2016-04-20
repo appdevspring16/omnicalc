@@ -18,8 +18,7 @@ class CalculationsController < ApplicationController
     @word_count = @text.split(" ").length
 
     if @text.include?@special_word
-    numSpecials = @text.split(" ").count(@special_word)
-    else
+      numSpecials = @text.split(" ").count(@special_word)
     end
 
     @occurrences = numSpecials
@@ -37,13 +36,16 @@ class CalculationsController < ApplicationController
     @principal = params[:principal_value].to_f
 
     # ================================================================================
-    # Your code goes below.
-    # The annual percentage rate the user input is in the decimal @apr.
-    # The number of years the user input is in the integer @years.
-    # The principal value the user input is in the decimal @principal.
-    # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    mrate = @apr/100/12
+
+    months = @years*12
+
+    return_rate = 1+mrate
+
+    denominator = return_rate**months-1
+
+    @monthly_payment = ((mrate) + (mrate/denominator))*@principal
 
     # ================================================================================
     # Your code goes above.
