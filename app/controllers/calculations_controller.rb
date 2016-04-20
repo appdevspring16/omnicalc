@@ -47,6 +47,7 @@ class CalculationsController < ApplicationController
     render("loan_payment.html.erb")
   end
 
+
   def time_between
     @starting = Chronic.parse(params[:starting_time])
     @ending = Chronic.parse(params[:ending_time])
@@ -60,12 +61,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = (@ending-@starting).round(2)
+    @minutes = (@seconds/60).round(2)
+    @hours = (@minutes/60).round(2)
+    @days = (@hours/24).round(2)
+    @weeks = (@days/7).round(2)
+    @years = (@weeks/52).round(2)
 
     # ================================================================================
     # Your code goes above.
