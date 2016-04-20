@@ -11,13 +11,13 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text.gsub(" ", "").length
 
-    @word_count = "Replace this string with your answer."
+    @word_count = @text.split.length
 
-    @occurrences = "Replace this string with your answer."
+    @occurrences = @text.downcase.split.count(@special_word)
 
     # ================================================================================
     # Your code goes above.
@@ -37,8 +37,10 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
+    monthlyapr = @apr/100/12
+    months = @years*12
+    @monthly_payment = @principal * (monthlyapr * (1 + monthlyapr) ** months) / ((1 + monthlyapr)**months - 1)
 
-    @monthly_payment = "Replace this string with your answer."
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +62,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/365.25
 
     # ================================================================================
     # Your code goes above.
@@ -82,32 +84,58 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
 
-    @sum = "Replace this string with your answer."
 
-    @mean = "Replace this string with your answer."
+  median = if @count.odd?
+            @sorted_numbers[@count/2]
+          else
+        ((@sorted_numbers[@count/2])+(@sorted_numbers[@count/2-1]))/2
+        end
+@median = median
+  @sum = @sorted_numbers.sum
 
-    @variance = "Replace this string with your answer."
+  @mean = @sum / @count
 
-    @standard_deviation = "Replace this string with your answer."
+forvar = 0
+@sorted_numbers.each do |vary|
+  forvar = forvar + (vary - @mean)**2
+    end
 
-    @mode = "Replace this string with your answer."
+@variance = forvar / @count
 
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+  @standard_deviation = @variance**0.5
 
-    render("descriptive_statistics.html.erb")
-  end
+  arrayv = @sorted_numbers
+      modefrequency = 0
+      mode2 = 0
+      arrayv.each do |red|
+        duke = red
+        number = arrayv.count(red)
+        if number > modefrequency
+          mode2 = duke
+          modefrequency = number
+        end
+
+
+        @mode = mode2
+
+end
+
+
+  # ================================================================================
+  # Your code goes above.
+  # ================================================================================
+
+  render("descriptive_statistics.html.erb")
+end
 end
