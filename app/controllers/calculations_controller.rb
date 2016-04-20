@@ -18,14 +18,15 @@ class CalculationsController < ApplicationController
     @character_count_without_spaces = @sanitized_text.length
 
     # word count
+    @text_array = @text.split
     if @character_count_without_spaces > 0
-      @word_count = @character_count_with_spaces -   @character_count_without_spaces + 1
+      @word_count = @text_array.length
+      #@word_count = @character_count_with_spaces -   #@character_count_without_spaces + 1
     else
       @word_count = 0
     end
 
     # occurrences
-    @text_array = @text.split
     @special_word = @special_word.downcase
     @count = 0
     @occurrences = 0
