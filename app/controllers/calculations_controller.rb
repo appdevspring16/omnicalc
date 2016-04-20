@@ -37,8 +37,10 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
+    monthlyapr = @apr/100/12
+    months = @years*12
+@monthly_payment = @principal * (monthlyapr * (1 + monthlyapr) ** months) / ((1 + monthlyapr)**months - 1)
 
-    @monthly_payment = "Replace this string with your answer."
 
     # ================================================================================
     # Your code goes above.
