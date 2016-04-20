@@ -39,7 +39,7 @@ class CalculationsController < ApplicationController
     # ================================================================================
     monthlyapr = @apr/100/12
     months = @years*12
-@monthly_payment = @principal * (monthlyapr * (1 + monthlyapr) ** months) / ((1 + monthlyapr)**months - 1)
+    @monthly_payment = @principal * (monthlyapr * (1 + monthlyapr) ** months) / ((1 + monthlyapr)**months - 1)
 
 
     # ================================================================================
@@ -84,32 +84,58 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
 
-    @sum = "Replace this string with your answer."
 
-    @mean = "Replace this string with your answer."
+  median = if @count.odd?
+            @sorted_numbers[@count/2]
+          else
+        ((@sorted_numbers[@count/2])+(@sorted_numbers[@count/2-1]))/2
+        end
+@median = median
+  @sum = @sorted_numbers.sum
 
-    @variance = "Replace this string with your answer."
+  @mean = @sum / @count
 
-    @standard_deviation = "Replace this string with your answer."
+forvar = 0
+@sorted_numbers.each do |vary|
+  forvar = forvar + (vary - @mean)**2
+    end
 
-    @mode = "Replace this string with your answer."
+@variance = forvar / @count
 
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+  @standard_deviation = @variance**0.5
 
-    render("descriptive_statistics.html.erb")
-  end
+  arrayv = @sorted_numbers
+      modefrequency = 0
+      mode2 = 0
+      arrayv.each do |red|
+        duke = red
+        number = arrayv.count(red)
+        if number > modefrequency
+          mode2 = duke
+          modefrequency = number
+        end
+
+
+        @mode = mode2
+
+end
+
+
+  # ================================================================================
+  # Your code goes above.
+  # ================================================================================
+
+  render("descriptive_statistics.html.erb")
+end
 end
