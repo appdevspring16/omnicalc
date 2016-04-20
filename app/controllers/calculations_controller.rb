@@ -1,8 +1,13 @@
+
+
 class CalculationsController < ApplicationController
+
 
   def word_count
     @text = params[:user_text]
     @special_word = params[:user_word]
+
+
 
     # ================================================================================
     # Your code goes below.
@@ -75,6 +80,7 @@ class CalculationsController < ApplicationController
   end
 
   def descriptive_statistics
+
     @numbers = params[:list_of_numbers].gsub(',', '').split.map(&:to_f)
 
     # ================================================================================
@@ -82,31 +88,89 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    @median = (@sorted_numbers[(@count - 1) / 2] + @sorted_numbers[@count / 2]) / 2.0
 
-    @sum = "Replace this string with your answer."
+    def sum(list_of_numbers)
+      running_total = 0
+      list_of_numbers.each do |number|
+        running_total = running_total + number
+      end
 
-    @mean = "Replace this string with your answer."
+      return running_total
+    end
+    @sum = sum(@numbers)
 
-    @variance = "Replace this string with your answer."
+    # MEAN
+    # ====
+    # To find the mean of a set,
+    #  - we sum up all the elements
+    #  - then we divide the sum by the number of elements in the set
 
-    @standard_deviation = "Replace this string with your answer."
 
-    @mode = "Replace this string with your answer."
+    def avg(list_of_numbers)
+      running_total = 0
+      list_of_numbers.each do |number|
+        running_total = running_total + number
+      end
+      n = list_of_numbers.length
+      out = running_total / n
 
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+      return out
+    end
+  @mean = avg(@numbers)
+  #  @mean = @sum / @count
+
+    # VARIANCE
+    # ========
+    # To find the variance of a set,
+    #  - we find the mean of the set
+    #  - for each number in the set,
+    #   - we find the difference between the number and the mean
+    #   - we square the difference
+    #  - the variance is the mean of the squared differences
+
+    def varian(list_of_numbers)
+      # Let's re-use the work we did above in the mean method
+
+      # ====================
+      running_total = 0
+      list_of_numbers.each do |number|
+        running_total = running_total + number
+      end
+      n = list_of_numbers.length
+      out = running_total / n
+
+      running_total2 = 0
+      list_of_numbers.each do |number|
+        running_total2 = ((out - number)**2) + running_total2
+      end
+      outvar = running_total2 / n
+
+      return outvar
+
+      # ====================
+    end
+    @variance = varian(@numbers)
+
+    @standard_deviation = @variance ** 0.5
+
+    def mode(list_of_numbers)
+      freq = list_of_numbers.inject(Hash.new(0)) { |h,v| h[v] += 1;h }
+      outmode = list_of_numbers.sort_by { |v| freq[v] }.last
+      return outmode
+    end
+
+    @mode = mode(@numbers)
 
     render("descriptive_statistics.html.erb")
   end
