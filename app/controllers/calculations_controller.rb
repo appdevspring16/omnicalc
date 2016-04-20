@@ -43,7 +43,15 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    # P is monthly payments
+    # L is total principal
+    # c is monthly interest rate (or APR / 12)
+    # n is the number of months of the loan
+    c = (@apr*0.01)/12
+    n = @years*12
+
+    @monthly_payment = (c*@principal*((1+c)**n)) / (((1+c) ** n) -1)
+
 
     # ================================================================================
     # Your code goes above.
