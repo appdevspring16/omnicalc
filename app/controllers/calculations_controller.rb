@@ -21,7 +21,6 @@ class CalculationsController < ApplicationController
     @text_array = @text.split
     if @character_count_without_spaces > 0
       @word_count = @text_array.length
-      #@word_count = @character_count_with_spaces -   #@character_count_without_spaces + 1
     else
       @word_count = 0
     end
@@ -32,7 +31,7 @@ class CalculationsController < ApplicationController
     @occurrences = 0
 
     while @count <= @text_array.length
-      if @text_array[@count].to_s.downcase == @special_word
+      if @text_array[@count].to_s.downcase.gsub(/[^a-z0-9\s]/i, '') == @special_word
         @occurrences +=1
       end
       @count +=1
@@ -144,7 +143,7 @@ class CalculationsController < ApplicationController
     while @count_mode <= @count
       if @sorted_numbers[@count_mode] == @sorted_numbers[@count_mode - 1]
       @mode_count += 1
-    elsif @mode_count > @max_mode
+      elsif @mode_count > @max_mode
         @index_mode = @count_mode - 1
     end
     @count_mode += 1
