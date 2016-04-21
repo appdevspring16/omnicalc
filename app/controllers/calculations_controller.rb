@@ -15,6 +15,7 @@ class CalculationsController < ApplicationController
 
     # total characters without spaces
     @sanitized_text = @text.gsub(" ", "")
+    @sanitized_text = @sanitized_text.gsub(/[\s]/i,"")
     @character_count_without_spaces = @sanitized_text.length
 
     # word count
@@ -31,7 +32,7 @@ class CalculationsController < ApplicationController
     @occurrences = 0
 
     while @count <= @text_array.length
-      if @text_array[@count].to_s.downcase.gsub(/[^a-z0-9\s]/i, '') == @special_word
+      if @text_array[@count].to_s.downcase.gsub(/[^a-z0-9\s]/i, "") == @special_word
         @occurrences +=1
       end
       @count +=1
