@@ -6,8 +6,9 @@ class CalculationsController < ApplicationController
 
 
     #### FIGURE THIS OUT ####
-    @text = @text.gsub(" \n"," ")
-    @text = @text.gsub("\n","")
+    #@text = @text.gsub(" \n"," ")
+    #@text = @text.strip
+    #@text = @text.gsub("\n"," ")
 
     @character_count_with_spaces = @text.length
 
@@ -48,10 +49,12 @@ class CalculationsController < ApplicationController
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
 
-    denom = 1 - ((1 + (@apr/100))**(-1*@years))
+    num = (@apr/100/12) * @principal
+    denom = 1-((1+(@apr/100/12))**(-1*@years*12))
+    @monthly_payment = num/denom
 
-
-    @monthly_payment = (((@apr/100)/denom)*@principal)/12
+    #denom = 1 - ((1 + (@apr/100))**(-1*@years))
+    #@monthly_payment = (((@apr/100)/denom)*@principal)/12
 
     render("loan_payment.html.erb")
   end
