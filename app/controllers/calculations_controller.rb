@@ -91,27 +91,49 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    sumNumbers = 0
 
-    @count = "Replace this string with your answer."
+    @numbers.each do |number|
+      sumNumbers += number
+    end
 
-    @minimum = "Replace this string with your answer."
+    def median(sorted, count)
+      if count.even?
+        (sorted[count/2 - 1] + sorted[count/2]).to_f / 2
+      else
+        sorted[count/2]
+      end
+    end
 
-    @maximum = "Replace this string with your answer."
+    def variance(numbers, mean, count)
 
-    @range = "Replace this string with your answer."
+    end
 
-    @median = "Replace this string with your answer."
+    def mode(numbers)
 
-    @sum = "Replace this string with your answer."
+    end
 
-    @mean = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @variance = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @standard_deviation = "Replace this string with your answer."
+    @minimum = @sorted_numbers.first
 
-    @mode = "Replace this string with your answer."
+    @maximum = @sorted_numbers.reverse.first
+
+    @range = @maximum - @minimum
+
+    @median = median(@sorted_numbers, @count)
+
+    @sum = sumNumbers
+
+    @mean = @sum / @count
+
+    @variance = variance(@numbers, @mean, @count)
+
+    @standard_deviation = "commented out" #Math.sqrt(@variance)
+
+    @mode = mode(@numbers)
 
     # ================================================================================
     # Your code goes above.
