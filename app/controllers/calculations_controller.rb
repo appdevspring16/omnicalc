@@ -9,7 +9,7 @@ class CalculationsController < ApplicationController
     # The text the user input is in the string @text.
     # The special word the user input is in the string @special_word.
     # ================================================================================
-
+# another small change
 
     @character_count_with_spaces = @text.length
 
