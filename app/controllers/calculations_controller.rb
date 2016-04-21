@@ -10,14 +10,18 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    clean_text = @text.gsub(" ", "")
+    @character_count_with_spaces = @text.length
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = clean_text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @word_count = @text.gsub(/[^-a-zA-Z]/, ' ').split.size
+    if @special_word != ""
+      @occurrences = @text.downcase.scan(/(?=#{@special_word.downcase})/).count
+    else
+      @occurrences =0
+    end
 
-    @word_count = "Replace this string with your answer."
-
-    @occurrences = "Replace this string with your answer."
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +42,10 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    @monthly_payment = (@principal*(1+(@apr/100))**@years)/(12*@years)
+
+
+
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +67,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending-@starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +89,55 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = "From #{@numbers.min} to #{@numbers.max}."
 
-    @median = "Replace this string with your answer."
+    if @sorted_numbers.length%2!=0
+      @median = @sorted_numbers[(@sorted_numbers.length-1)/2]
+    else
+      @median =( @sorted_numbers[@sorted_numbers.length/2]+@sorted_numbers[(@sorted_numbers.length/2)-1])/2
+    end
 
-    @sum = "Replace this string with your answer."
+    def sum(list_of_numbers)
+      running_total = 0
+      list_of_numbers.each do |number|
+        running_total = running_total + number
+      end
+      return running_total
+    end
+    @sum = sum(@numbers)
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum/@numbers.count
 
-    @variance = "Replace this string with your answer."
+    def var(list_of_numbers)
+      running_variance = 0
+      list_of_numbers.each do |number|
+        running_variance = running_variance + (number-@mean)**2
+      end
+      return running_variance
+    end
 
-    @standard_deviation = "Replace this string with your answer."
+    @variance = var(@numbers)
 
-    @mode = "Replace this string with your answer."
+
+    @standard_deviation = @variance**0.5
+
+    def mode(list_of_numbers)
+      hash = Hash.new(0)
+      list_of_numbers.each do |number|
+        hash[number] = hash[number]+1
+      end
+      return hash
+      end
+
+    @mode = mode(@numbers)
 
     # ================================================================================
     # Your code goes above.
