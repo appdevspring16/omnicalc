@@ -22,7 +22,7 @@ class CalculationsController < ApplicationController
     b = 0
     x = @special_word.downcase
     i.each do |lang|
-      lang_2=lang.downcase
+      lang_2=lang.downcase.gsub(/[^a-z0-9\s]/i, '')
       if lang_2==x
         b=b+1
       end
