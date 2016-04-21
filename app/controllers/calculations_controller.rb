@@ -16,7 +16,7 @@ class CalculationsController < ApplicationController
 
     @word_count = @text.split.size
 
-    @occurrences = @text.scan(@special_word).size
+    @occurrences = @text.scan(@special_word.downcase).size
 
     # ================================================================================
     # Your code goes above.
@@ -36,9 +36,9 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-    monthly_rate = @apr/1200
+    monthly_rate = @apr/12
 
-    @monthly_payment = monthly_rate + (monthly_rate/((1+ monthly_rate)^(@years*12))-1))* @principal
+    @monthly_payment = (@apr/1200*@principal)/(1-(1+@apr/1200)**((-1*@years.to_f)*12))
 
 
     # ================================================================================
