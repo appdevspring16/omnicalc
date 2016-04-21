@@ -61,12 +61,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = ((@ending - @starting)).to_d
+    @minutes = ((@ending - @starting)/60).to_d
+    @hours = ((@ending - @starting)/60/60).to_d
+    @days = ((@ending - @starting)/60/60/24).to_d
+    @weeks = ((@ending - @starting)/60/60/24/7).to_d
+    @years = ((@ending - @starting)/60/60/24/365).to_d
 
     # ================================================================================
     # Your code goes above.
@@ -83,21 +83,25 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = (@maximum - @minimum).abs
 
-    @median = "Replace this string with your answer."
+    @sorted = @numbers.sort
+    @len = @sorted.length
 
-    @sum = "Replace this string with your answer."
 
-    @mean = "Replace this string with your answer."
+    @median =   (@sorted[(@len - 1) / 2] + @sorted[@len / 2]) / 2.0
+
+    @sum = @numbers.inject(:+)
+
+    @mean = @sum.to_f / @len
 
     @variance = "Replace this string with your answer."
 
