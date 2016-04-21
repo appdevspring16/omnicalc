@@ -15,9 +15,9 @@ class CalculationsController < ApplicationController
       specialWordCount += 1 if word == @special_word
     end
 
-    @character_count_with_spaces = @text.scan(/./).size
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = @text.gsub(/\s+/, '').scan(/./).size
+    @character_count_without_spaces = @text.gsub(/\s+/, '').length
 
     @word_count = @text.split(' ').length
 
