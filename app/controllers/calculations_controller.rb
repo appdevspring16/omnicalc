@@ -3,6 +3,7 @@ class CalculationsController < ApplicationController
   def word_count
     @text = params[:user_text]
     @special_word = params[:user_word]
+    check_word = @special_word
 
     # ================================================================================
     # Your code goes below.
@@ -11,13 +12,24 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.chomp.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    number_of_spaces = @text.count(" ")
+    @character_count_without_spaces = @character_count_with_spaces - number_of_spaces
 
-    @word_count = "Replace this string with your answer."
+    text_array = @text.split
+    @word_count = text_array.length
 
-    @occurrences = "Replace this string with your answer."
+    i = 0
+
+    text_array.each do |word_text|
+      if word_text == check_word
+        i = i + 1
+      end
+    end
+
+
+    @occurrences = i
 
     # ================================================================================
     # Your code goes above.
