@@ -6,7 +6,7 @@ class CalculationsController < ApplicationController
 
 
     #### FIGURE THIS OUT ####
-    #@text = @text.delete("\n")
+    @text = @text.gsub(" \n"," ")
     @text = @text.gsub("\n","")
 
     @character_count_with_spaces = @text.length
