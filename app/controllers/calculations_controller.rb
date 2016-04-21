@@ -16,8 +16,12 @@ clean_text = @text.gsub(" ", "")
     @character_count_without_spaces = clean_text.length
 
     @word_count = @text.gsub(/[^-a-zA-Z]/, ' ').split.size
+if @special_word != ""
+  @occurrences = @text.downcase.scan(/(?=#{@special_word.downcase})/).count
+else
+  @occurrences =0
+end
 
-    @occurrences = @text.scan(/(?=#{@special_word})/).count
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +42,10 @@ clean_text = @text.gsub(" ", "")
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+  @monthly_payment = (@principal*(1+(@apr/100))**@years)/@years
+
+
+
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +67,12 @@ clean_text = @text.gsub(" ", "")
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending-@starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
@@ -82,7 +89,7 @@ clean_text = @text.gsub(" ", "")
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
     @count = "Replace this string with your answer."
 
