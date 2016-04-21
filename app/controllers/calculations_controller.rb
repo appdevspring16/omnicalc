@@ -4,7 +4,10 @@ class CalculationsController < ApplicationController
     @text = params[:user_text]
     @special_word = params[:user_word]
 
-    @text = @text.delete("\n")
+
+    #### FIGURE THIS OUT ####
+    #@text = @text.delete("\n")
+    @text = @text.gsub("\n","")
 
     @character_count_with_spaces = @text.length
 
