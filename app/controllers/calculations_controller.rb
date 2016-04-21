@@ -11,14 +11,11 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
-
-    @character_count_without_spaces = "Replace this string with your answer."
-
-    @word_count = "Replace this string with your answer."
-
-    @occurrences = "Replace this string with your answer."
-
+    @character_count_with_spaces = @text.length
+    @space_count = @text.split.count-1
+    @character_count_without_spaces = @character_count_with_spaces-@space_count
+    @word_count = @text.scan(/\S+/).size
+    @occurrences = @text.split.count(@special_word)
     # ================================================================================
     # Your code goes above.
     # ================================================================================
@@ -37,8 +34,12 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
+    @months = @years*12
+    @monthly_rate = @apr / (12*100)
+    @monthly_payment=(@monthly_rate+(@monthly_rate/(((1+@monthly_rate)**(@years*12))-1)))*@principal
 
-    @monthly_payment = "Replace this string with your answer."
+
+    # @monthly_payment = "Replace this string with your answer."
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +61,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = (@ending - @starting).abs
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @days/365
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +83,47 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    @median = (@sorted_numbers[(@count - 1) / 2] + @sorted_numbers[@count / 2]) / 2.0
 
-    @sum = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @mean = "Replace this string with your answer."
+    @mean = (@sorted_numbers.inject(0.0) {|s,x| s + x}) / Float(@sorted_numbers.length)
 
-    @variance = "Replace this string with your answer."
+    @variance = (@sorted_numbers.inject(0.0) {|s,x| s + (x - @mean)**2})/@count
 
-    @standard_deviation = "Replace this string with your answer."
+        @standard_deviation =Math.sqrt(@variance)
 
-    @mode = "Replace this string with your answer."
+    def mode(array)
+    counter = Hash.new(0)
+
+    array.each do |i|
+      counter[i] += 1
+    end
+
+    mode_array = []
+
+    counter.each do |k, v|
+      if v == counter.values.max
+        mode_array << k
+      end
+    end
+
+    mode_array.sort
+  
+  end
+
+
+    @mode = mode(@sorted_numbers)
 
     # ================================================================================
     # Your code goes above.
