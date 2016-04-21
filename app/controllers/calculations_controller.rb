@@ -42,7 +42,12 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    def pmt(rate, nper, pv)
+      return (( rate / 100 / 12) * pv) / (1 - ((1 + (rate / 100 / 12)) ** (-nper * 12)))
+    end
+
+    @monthly_payment = pmt(@apr, @years, @principal).round(2)
+
 
     # ================================================================================
     # Your code goes above.
