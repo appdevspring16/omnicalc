@@ -17,7 +17,7 @@ class CalculationsController < ApplicationController
 
     @word_count = @text.split.count
 
-    @occurrences = @text.count (@special_word)
+    @occurrences = @text.scan(@special_word).count
 
     # ================================================================================
     # Your code goes above.
@@ -40,7 +40,7 @@ class CalculationsController < ApplicationController
 
     number_payments = @years*12
     monthly_interest_rate = (@apr/12)/100.to_f
-    @monthly_payment = (monthly_interest_rate * @principal * (1+monthly_interest_rate)**number_payments) / (1+monthly_interest_rate)**number_payments -1
+    @monthly_payment = (monthly_interest_rate * @principal) / (1-(1+monthly_interest_rate)**(-number_payments)) 
 
     # ================================================================================
     # Your code goes above.
@@ -94,9 +94,15 @@ class CalculationsController < ApplicationController
 
     @range = @numbers.max - @numbers.min
 
-    @median = "Replace this string with your answer."
+    len= @numbers.length
+    @median = len % 2 == 1 ? @sorted_numbers[len/2] : (@sorted_numbers[len/2 - 1] + @sorted_numbers[len/2]).to_f / 2
 
-    @sum = @numbers.sum
+      running_total=0
+      @numbers.each do |number|
+        running_total = running_total + number
+      end
+
+    @sum = running_total
 
     @mean = @numbers.sum / @numbers.count
 
