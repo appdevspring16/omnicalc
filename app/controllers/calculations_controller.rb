@@ -18,11 +18,11 @@ class CalculationsController < ApplicationController
 
     @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = @text.tr(" ","").length
+    @character_count_without_spaces = @text.gsub(" ","").length
 
     @word_count = @text.split(" ").length
 
-    @occurrences = @text.split(" ").count(@special_word)
+    @occurrences = @text.downcase.gsub(/[^a-z0-9\s]/i, '').split(" ").count(@special_word.downcase)
 
     # ================================================================================
     # Your code goes above.
@@ -73,12 +73,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds / 60
+    @hours = @minutes / 60
+    @days = @hours / 24
+    @weeks = @days / 7
+    @years = @weeks / 52
 
     # ================================================================================
     # Your code goes above.
