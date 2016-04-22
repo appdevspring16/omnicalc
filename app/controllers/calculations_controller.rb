@@ -106,11 +106,19 @@ class CalculationsController < ApplicationController
     end
 
     def variance(numbers, mean, count)
-
+      var = 0
+      numbers.each do |num|
+        var += (num - mean) ** 2
+      end
+      return var / count
     end
 
     def mode(numbers)
-
+      counts = Hash.new 0
+      numbers.each do |num|
+        counts[num] += 1
+      end
+      return countsDescending = counts.sort_by{|k,v| v}.reverse.first.first
     end
 
     @sorted_numbers = @numbers.sort
@@ -131,7 +139,7 @@ class CalculationsController < ApplicationController
 
     @variance = variance(@numbers, @mean, @count)
 
-    @standard_deviation = "commented out" #Math.sqrt(@variance)
+    @standard_deviation = Math.sqrt(@variance)
 
     @mode = mode(@numbers)
 
