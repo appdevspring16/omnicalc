@@ -92,7 +92,7 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = @numbers.sort
+    @numbers_sorted = @numbers.sort
 
     @count = @numbers.length
 
@@ -104,15 +104,64 @@ class CalculationsController < ApplicationController
 
     @median = "Replace this string with your answer."
 
-    @sum = @numbers.sum
+    # SUM
+    # ===
+    # To find the sum of a set of numbers,
+    #  - we start with 0
+    #  - for each number in the set,
+    #   - we add it to the running total
+    #  - after we've looked at every number, the running total is the sum
+    def sum(@numbers)
+      running_total = 0
+      numbers.each do |number|
+      running_total = running_total + number
+    end
 
-    @mean = @sum/@count
+      return running_total
+    end
+    # MEAN
+    # ====
+    # To find the mean of a set,
+    #  - we sum up all the elements
+    #  - then we divide the sum by the number of elements in the set
 
-    @variance = "Replace this string with your answer."
+    def mean(@numbers)
+      # Let's re-use the work we did above in the sum method
 
-    @standard_deviation = "Replace this string with your answer."
+      # ====================
+      # Your code goes here.
+      # ====================
+    end
 
-    @mode = "Replace this string with your answer."
+    # VARIANCE
+    # ========
+    # To find the variance of a set,
+    #  - we find the mean of the set
+    #  - for each number in the set,
+    #   - we find the difference between the number and the mean
+    #   - we square the difference
+    #  - the variance is the mean of the squared differences
+
+    def variance(list_of_numbers)
+      # Let's re-use the work we did above in the mean method
+
+      # ====================
+      # Your code goes here.
+      # ====================
+    end
+
+    # STANDARD DEVIATION
+    # ==================
+    # To find the standard deviation of a set,
+    #  - take the square root of the variance
+
+    def standard_deviation(list_of_numbers)
+      # ====================
+      # Your code goes here.
+      # ====================
+    end
+
+    @mode = mode(@sorted_numbers)
 
     # ================================================================================
     # Your code goes above.
