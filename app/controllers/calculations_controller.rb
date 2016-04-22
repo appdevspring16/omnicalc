@@ -93,7 +93,7 @@ class CalculationsController < ApplicationController
 
     @range = @numbers.max - @numbers.min
 
-odd_middle = @count/2+1
+odd_middle = @count/2
 even_middle1 = (@count/2)-1
 even_middle2 = (@count/2)
 
@@ -109,10 +109,17 @@ even_middle2 = (@count/2)
 
     @mean = @sum/@count
 
-    @variance = "TBD"
+ sq_diffs = []
 
-    @standard_deviation = "TBD"
-    # @var**(1/2)
+  @numbers.each do |num|
+    diff = num - @mean
+    sq_diff = diff**2
+    sq_diffs.push(sq_diff)
+  end
+
+    @variance = sq_diffs.sum / @count
+
+    @standard_deviation = @variance**0.5
 
     @mode = "TBD"
 
