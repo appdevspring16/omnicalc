@@ -121,8 +121,18 @@ even_middle2 = (@count/2)
 
     @standard_deviation = @variance**0.5
 
-    @mode = "TBD"
+     most_frequent_num = nil
+     most_frequent_count = 0
 
+    @numbers.each do |num|
+      occurrences = @numbers.count(num)
+      if occurrences > most_frequent_count
+        most_frequent_num = num
+        most_frequent_count = occurrences
+      end
+    end
+
+    @mode = most_frequent_num
     # ================================================================================
     # Your code goes above.
     # ================================================================================
