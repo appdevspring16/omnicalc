@@ -7,7 +7,7 @@ class CalculationsController < ApplicationController
   end
   def occurances textArray,specWord
     count = 0
-    for i in 0..textArray.length
+    for i in 0..textArray.length-1
       if textArray[i]==specWord
         count = count + 1
       end
@@ -20,7 +20,9 @@ class CalculationsController < ApplicationController
 
     text = @text
     special_word = @special_word
-    textArray = text.split(' ')
+    special_word.downcase
+    textArray = text.split(/\W+/)
+    textArray = textArray.map{ |item| item.downcase }
 
     @character_count_with_spaces = text.length
 
