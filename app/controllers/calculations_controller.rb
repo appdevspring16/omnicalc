@@ -10,14 +10,18 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    specialWordCount = 0
+    @text.split(' ').each do |word|
+      specialWordCount += 1 if word == @special_word
+    end
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text.gsub(/\s+/, '').length
 
-    @word_count = "Replace this string with your answer."
+    @word_count = @text.split(' ').length
 
-    @occurrences = "Replace this string with your answer."
+    @occurrences = specialWordCount
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +42,12 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    def pmt(rate, nper, pv)
+      return (( rate / 100 / 12) * pv) / (1 - ((1 + (rate / 100 / 12)) ** (-nper * 12)))
+    end
+
+    @monthly_payment = pmt(@apr, @years, @principal).round(2)
+
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +69,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds / 60
+    @hours = @minutes / 60
+    @days = @hours / 24
+    @weeks = @days / 7
+    @years = @weeks / 52
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +91,57 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    sumNumbers = 0
 
-    @count = "Replace this string with your answer."
+    @numbers.each do |number|
+      sumNumbers += number
+    end
 
-    @minimum = "Replace this string with your answer."
+    def median(sorted, count)
+      if count.even?
+        (sorted[count/2 - 1] + sorted[count/2]).to_f / 2
+      else
+        sorted[count/2]
+      end
+    end
 
-    @maximum = "Replace this string with your answer."
+    def variance(numbers, mean, count)
+      var = 0
+      numbers.each do |num|
+        var += (num - mean) ** 2
+      end
+      return var / count
+    end
 
-    @range = "Replace this string with your answer."
+    def mode(numbers)
+      counts = Hash.new 0
+      numbers.each do |num|
+        counts[num] += 1
+      end
+      return countsDescending = counts.sort_by{|k,v| v}.reverse.first.first
+    end
 
-    @median = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @sum = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @mean = "Replace this string with your answer."
+    @minimum = @sorted_numbers.first
 
-    @variance = "Replace this string with your answer."
+    @maximum = @sorted_numbers.reverse.first
 
-    @standard_deviation = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @mode = "Replace this string with your answer."
+    @median = median(@sorted_numbers, @count)
+
+    @sum = sumNumbers
+
+    @mean = @sum / @count
+
+    @variance = variance(@numbers, @mean, @count)
+
+    @standard_deviation = Math.sqrt(@variance)
+
+    @mode = mode(@numbers)
 
     # ================================================================================
     # Your code goes above.
