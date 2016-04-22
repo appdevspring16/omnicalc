@@ -125,7 +125,7 @@ class CalculationsController < ApplicationController
 
     @variance=total/(@count)
 
-    @standard_deviation = @variance ** (1/2)
+    @standard_deviation = @variance ** (0.5)
 
     @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
     @mode = @numbers.max_by{ |v| @freq[v] }
