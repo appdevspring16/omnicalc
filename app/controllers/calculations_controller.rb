@@ -30,7 +30,7 @@ class CalculationsController < ApplicationController
     @apr = params[:annual_percentage_rate].to_f
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
-    @eff_int = @apr/12
+    @eff_int = @apr/100/12
 
     # ================================================================================
     # Your code goes below.
@@ -103,11 +103,13 @@ class CalculationsController < ApplicationController
 
     @mean = @sum.to_f / @len
 
-    @variance = "Replace this string with your answer."
+    @ss = @sorted_numbers.reduce(0) { |ss_total, num| ss_total += ((num-@mean)**2) }
 
-    @standard_deviation = "Replace this string with your answer."
+    @variance = @ss / @sorted_numbers.length
+    @standard_deviation = Math.sqrt(@variance)
 
-    @mode = "Replace this string with your answer."
+    @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    @mode = @numbers.max_by{ |v| @freq[v] }
 
     # ================================================================================
     # Your code goes above.
