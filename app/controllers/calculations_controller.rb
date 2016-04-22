@@ -11,13 +11,30 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
 
-    @word_count = "Replace this string with your answer."
+    @character_count_without_spaces = @text.length-@text.count(" ")
 
-    @occurrences = "Replace this string with your answer."
+count=0
+i=0
+while i<@text.length
+if @text[i]==" " && @text[i-1]!=" "
+  count=count+1
+end
+i=i+1
+end
+
+    @word_count =count+1
+i=0
+count=0
+while i<@text.length
+  if  @text.split[i]==@special_word && @text.split[i-1]=" " && @text.split[i+1]=" "
+count=count+1
+end
+i=i+1
+end
+    @occurrences = count
 
     # ================================================================================
     # Your code goes above.
@@ -37,8 +54,11 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
+    mon_apr=(@apr/12)/100
+    n=@years*12
+    rate=(1+mon_apr)**n
+    var1=(mon_apr*@principal*rate)/(rate-1)
+    @monthly_payment = var1
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +80,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending-@starting
+    @minutes = (@ending-@starting)/60
+    @hours = ((@ending-@starting)/60)/60
+    @days = (((@ending-@starting)/60)/60)/24
+    @weeks = ((((@ending-@starting)/60)/60)/24)/7
+    @years = (((((@ending-@starting)/60)/60)/24)/7)/52
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +102,66 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum-@minimum
 
-    @median = "Replace this string with your answer."
 
-    @sum = "Replace this string with your answer."
+var1=@count/2
+var2=@sorted_numbers[var1]
+var3=@sorted_numbers[var1-1]
+var4=(var2+var3)/2
+if @count%2!=0
+  @median=var2
+else @median=var4
+end
 
-    @mean = "Replace this string with your answer."
 
-    @variance = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @standard_deviation = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @mode = "Replace this string with your answer."
+i=0
+running_total=0
+while i<@numbers.length
+  running=@numbers[i]-@mean
+  running_total=running_total+(running**2)
+   i=i+1
+end
+
+
+    @variance = running_total/@count
+
+    @standard_deviation = Math.sqrt(@variance)
+# i=0
+# arr_created=[]
+# while i<@numbers.length
+#   holder=@numbers[i].count
+#   arr_created=holder.push
+# end
+#
+#arr_created.max
+
+i=0
+new_array=[]
+count=0
+while i<@numbers.length
+  @numbers.each do |num|
+    if num=@numbers[i]
+      count=count+1
+      new_array.push(count)
+    end
+  end
+    i=i+1
+  end
+
+    @mode = new_array.max
 
     # ================================================================================
     # Your code goes above.
