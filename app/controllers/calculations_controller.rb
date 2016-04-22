@@ -37,7 +37,7 @@ class CalculationsController < ApplicationController
 
   def loan_payment
     @apr = params[:annual_percentage_rate].to_f
-    @years = params[:number_of_years].to_f
+    @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
 
     # ================================================================================
@@ -47,8 +47,9 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
     @rate=@apr/12.0
-    @months = @years*12.0
-    @monthly_payment = (@rate*@principal)/(1-((1+@rate)**(-1*@months)))
+    @rate = @rate*0.01
+    @months = @years*12
+    @monthly_payment = (@rate*@principal)/(1.0-((1.0+@rate)**(-@months)))
 
     # ================================================================================
     # Your code goes above.
@@ -106,11 +107,11 @@ class CalculationsController < ApplicationController
     if @count.even? == true
       @median = (@sorted_numbers[@middle] + @sorted_numbers[@middle + 1])/2
     else @median = @sorted_numbers[@middle]
-
     end
+
     @running_total = 0
     @numbers.each do |number|
-      @running_total = @running_total + @number
+      @running_total = @running_total + number
     end
     @sum = @running_total
 
@@ -118,7 +119,7 @@ class CalculationsController < ApplicationController
 
     @variance = 0
     @numbers.each do |number|
-      @squared_difference = (@number - @mean)**2
+      @squared_difference = (number - @mean)**2
       @variance  = @variance + @squared_difference
     end
     @variance = @variance/@count
@@ -127,17 +128,17 @@ class CalculationsController < ApplicationController
 
     @number_hash = Hash.new
     @numbers.each do |number|
-      if @number_hash.include? @number
-        @number_hash[@number] = @number_hash[@number] + 1
+      if @number_hash.include? number
+        @number_hash[number] = @number_hash[number] + 1
       else
-        @number_hash[@number] = 1
+        @number_hash[number] = 1
       end
     end
     @mode = 0
     @values = @number_hash.map(&:last)
     @number_hash.each do |number|
-      if @number[1] == @values.max
-        @mode = @number[0]
+      if number[1] == @values.max
+        @mode = number[0]
       end
     end
 
