@@ -11,14 +11,16 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text.gsub(" ","").length
 
-    @word_count = "Replace this string with your answer."
-
-    @occurrences = "Replace this string with your answer."
-
+    @word_count = @text.split.size
+    if @special_word == ""
+      @occurrences = 0;
+    else
+      @occurrences = @text.scan(@special_word).size
+    end
     # ================================================================================
     # Your code goes above.
     # ================================================================================
@@ -37,8 +39,11 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
+    if @apr = 0
+      @monthly_payment = @principal/(@years*12)
+    else
+      @monthly_payment =@principal*(@apr/(100*12))/(1-(1+@apr/(100*12))**(-@years*12))
+    end
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +65,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
@@ -81,28 +86,56 @@ class CalculationsController < ApplicationController
     # Your code goes below.
     # The numbers the user input are in the array @numbers.
     # ================================================================================
+    def median(array)
+      size = array.size
+      if size%2 == 1
+        return array[(size-1)/2]
+      else
+        return ((array[size/2-1]+array[(size/2)])/2)
+      end
+    end
 
-    @sorted_numbers = "Replace this string with your answer."
+    def variance(array,avg)
+    var = 0
+    array.each do |value|
+      var = var +(value-avg)**2
+    end
+    return var/array.size
+    end
 
-    @count = "Replace this string with your answer."
+    def mode (array)
+      unique = array.uniq
+      maxnumber = 0
+      maxcount = 0
+      unique.each do |value|
+        if array.count(value) > maxcount
+          maxcount = array.count(value)
+          maxnumber = value
+        end
+      end
+      return maxnumber
+    end
+    @sorted_numbers = @numbers.sort
 
-    @minimum = "Replace this string with your answer."
+    @count = @numbers.size
 
-    @maximum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @range = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @median = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @sum = "Replace this string with your answer."
+    @median = median(@sorted_numbers)
 
-    @mean = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @variance = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @standard_deviation = "Replace this string with your answer."
+    @variance = variance(@numbers,@mean)
 
-    @mode = "Replace this string with your answer."
+    @standard_deviation = @variance**0.5
+
+    @mode = mode(@numbers)
 
     # ================================================================================
     # Your code goes above.
