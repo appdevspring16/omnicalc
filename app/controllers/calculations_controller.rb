@@ -2,26 +2,53 @@ class CalculationsController < ApplicationController
 
   def word_count
     @text = params[:user_text]
+    # raise @text.gsub('\n', '').inspect
     @special_word = params[:user_word]
 
-    # ================================================================================
-    # Your code goes below.
-    # The text the user input is in the string @text.
-    # The special word the user input is in the string @special_word.
-    # ================================================================================
+
+    #### FIGURE THIS OUT ####
+    #@text = @text.gsub(" \n"," ")
+    #@text = @text.chomp
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
 
-    @word_count = "Replace this string with your answer."
 
-    @occurrences = "Replace this string with your answer."
+    no_space = @text.gsub("\n"," ")
+    no_space = words = no_space.gsub("\r"," ")
 
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    no_space = no_space.gsub(" ","")
+    # raise no_space.inspect
+    @character_count_without_spaces = no_space.length
+
+    x = 0
+    count = 0
+    while x < words.length
+      if words[x] == " "
+        count = count + 1
+      end
+      x = x + 1
+    end
+
+    @word_count = count
+
+    # if @text[@text.length-1] == " "
+    #   @word_count = count
+    # else
+    #   @word_count = count + 1
+    # end
+
+    temp_text = words.downcase
+    @special_word = @special_word.downcase
+
+    temp_text = temp_text.gsub(".","")
+    temp_text = temp_text.gsub(",","")
+    temp_text = temp_text.gsub("!","")
+    temp_text = temp_text.gsub("?","")
+
+    temp_text = temp_text.split
+    @occurrences = temp_text.count(@special_word)
 
     render("word_count.html.erb")
   end
@@ -31,18 +58,12 @@ class CalculationsController < ApplicationController
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
 
-    # ================================================================================
-    # Your code goes below.
-    # The annual percentage rate the user input is in the decimal @apr.
-    # The number of years the user input is in the integer @years.
-    # The principal value the user input is in the decimal @principal.
-    # ================================================================================
+    num = (@apr/100/12) * @principal
+    denom = 1-((1+(@apr/100/12))**(-1*@years*12))
+    @monthly_payment = num/denom
 
-    @monthly_payment = "Replace this string with your answer."
-
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    #denom = 1 - ((1 + (@apr/100))**(-1*@years))
+    #@monthly_payment = (((@apr/100)/denom)*@principal)/12
 
     render("loan_payment.html.erb")
   end
@@ -51,25 +72,12 @@ class CalculationsController < ApplicationController
     @starting = Chronic.parse(params[:starting_time])
     @ending = Chronic.parse(params[:ending_time])
 
-    # ================================================================================
-    # Your code goes below.
-    # The start time is in the Time @starting.
-    # The end time is in the Time @ending.
-    # Note: Ruby stores Times in terms of seconds since Jan 1, 1970.
-    #   So if you subtract one time from another, you will get an integer
-    #   number of seconds as a result.
-    # ================================================================================
-
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
-
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    @seconds = @ending - @starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52.1429
 
     render("time_between.html.erb")
   end
@@ -77,36 +85,48 @@ class CalculationsController < ApplicationController
   def descriptive_statistics
     @numbers = params[:list_of_numbers].gsub(',', '').split.map(&:to_f)
 
-    # ================================================================================
-    # Your code goes below.
-    # The numbers the user input are in the array @numbers.
-    # ================================================================================
+    @sorted_numbers = @numbers.sort
 
-    @sorted_numbers = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @count = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @minimum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @maximum = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @range = "Replace this string with your answer."
+    if @count.odd? == true
+      @median = @sorted_numbers[(@count/2).to_f]
+    else
+      @median = (@sorted_numbers[@count/2] + @sorted_numbers[(@count/2)-1])/2
+    end
 
-    @median = "Replace this string with your answer."
+    part_total = 0
+    @numbers.each do |number|
+      part_total = part_total + number
+    end
 
-    @sum = "Replace this string with your answer."
+    @sum = part_total
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum / @count
 
-    @variance = "Replace this string with your answer."
+    sq_diff = 0
+    @numbers.each do |number|
+      sq_diff = sq_diff + (number-@mean)**2
+    end
 
-    @standard_deviation = "Replace this string with your answer."
+    @variance = sq_diff / @count
 
-    @mode = "Replace this string with your answer."
+    @standard_deviation = @variance**0.5
 
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    max_count = 0
+    @mode = 0
+    @sorted_numbers.each do |number|
+      if @sorted_numbers.count(number) > max_count
+        max_count = @sorted_numbers.count(number)
+        @mode = number
+      end
+    end
 
     render("descriptive_statistics.html.erb")
   end
