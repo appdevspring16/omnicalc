@@ -37,7 +37,7 @@ class CalculationsController < ApplicationController
 
   def loan_payment
     @apr = params[:annual_percentage_rate].to_f
-    @years = params[:number_of_years].to_i
+    @years = params[:number_of_years].to_f
     @principal = params[:principal_value].to_f
 
     # ================================================================================
@@ -47,7 +47,7 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
     @rate=@apr/12.0
-    @months = @years*12
+    @months = @years*12.0
     @monthly_payment = (@rate*@principal)/(1-((1+@rate)**(-1*@months)))
 
     # ================================================================================
@@ -92,27 +92,55 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @sorted_numbers[0]
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @sorted_numbers[-1]
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    @middle = @count/2
+    if @count.even? == true
+      @median = (@sorted_numbers[@middle] + @sorted_numbers[@middle + 1])/2
+    else @median = @sorted_numbers[@middle]
 
-    @sum = "Replace this string with your answer."
+    end
+    @running_total = 0
+    @numbers.each do |number|
+      @running_total = @running_total + @number
+    end
+    @sum = @running_total
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @variance = "Replace this string with your answer."
+    @variance = 0
+    @numbers.each do |number|
+      @squared_difference = (@number - @mean)**2
+      @variance  = @variance + @squared_difference
+    end
+    @variance = @variance/@count
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = Math.sqrt(@variance)
 
-    @mode = "Replace this string with your answer."
+    @number_hash = Hash.new
+    @numbers.each do |number|
+      if @number_hash.include? @number
+        @number_hash[@number] = @number_hash[@number] + 1
+      else
+        @number_hash[@number] = 1
+      end
+    end
+    @mode = 0
+    @values = @number_hash.map(&:last)
+    @number_hash.each do |number|
+      if @number[1] == @values.max
+        @mode = @number[0]
+      end
+    end
+
 
     # ================================================================================
     # Your code goes above.
