@@ -35,14 +35,19 @@ class CalculationsController < ApplicationController
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
 
+
+
     # ================================================================================
     # Your code goes below.
     # The annual percentage rate the user input is in the decimal @apr.
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
+    aprmonths = @apr / 100 / 12
+    months = @years * 12
+    @monthly_payment = @principal * (aprmonths * ((1 + aprmonths)**months)) / (((1 + aprmonths)**months) - 1)
 
-    @monthly_payment = "Replace this string with your answer."
+
 
     # ================================================================================
     # Your code goes above.
