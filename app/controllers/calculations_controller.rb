@@ -2,33 +2,42 @@ class CalculationsController < ApplicationController
 
   def word_count
     @text = params[:user_text]
+    # raise @text.gsub('\n', '').inspect
     @special_word = params[:user_word]
 
 
     #### FIGURE THIS OUT ####
     #@text = @text.gsub(" \n"," ")
-    #@text = @text.strip
-    #@text = @text.gsub("\n"," ")
+    #@text = @text.chomp
+
 
     @character_count_with_spaces = @text.length
 
-    no_space = @text.gsub(" ","")
+
+
+    no_space = @text.gsub("\n"," ")
+    no_space = words = no_space.gsub("\r"," ")
+
+    no_space = no_space.gsub(" ","")
+    # raise no_space.inspect
     @character_count_without_spaces = no_space.length
 
     x = 0
     count = 0
-    while x < @text.length
-      if @text[x] == " "
+    while x < words.length
+      if words[x] == " "
         count = count + 1
       end
       x = x + 1
     end
 
-    if @text[@text.length-1] == " "
-      @word_count = count
-    else
-      @word_count = count + 1
-    end
+    @word_count = count
+
+    # if @text[@text.length-1] == " "
+    #   @word_count = count
+    # else
+    #   @word_count = count + 1
+    # end
 
     temp_text = @text.downcase
     @special_word = @special_word.downcase
