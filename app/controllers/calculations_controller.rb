@@ -1,23 +1,34 @@
 class CalculationsController < ApplicationController
-
+  def without_spaces stringSample
+    return stringSample.length - stringSample.count(' ')
+  end
+  def word_counter textArray
+    return textArray.length
+  end
+  def occurances textArray,specWord
+    count = 0
+    for i in 0..textArray.length
+      if textArray[i]==specWord
+        count = count + 1
+      end
+    end
+    return count
+  end
   def word_count
     @text = params[:user_text]
     @special_word = params[:user_word]
 
-    # ================================================================================
-    # Your code goes below.
-    # The text the user input is in the string @text.
-    # The special word the user input is in the string @special_word.
-    # ================================================================================
+    text = @text
+    special_word = @special_word
+    textArray = text.split(' ')
 
+    @character_count_with_spaces = text.length
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = without_spaces(text)
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @word_count = word_counter(textArray)
 
-    @word_count = "Replace this string with your answer."
-
-    @occurrences = "Replace this string with your answer."
+    @occurrences = occurances(textArray,special_word)
 
     # ================================================================================
     # Your code goes above.
@@ -37,8 +48,14 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
+    apr = @apr/(100*12)
+    years = @years
+    principal = @principal
+    num = apr*principal
+    power = (1+apr)**(-years*12)
+    den = 1-power
+    monthly_payment = num/den
+    @monthly_payment = monthly_payment
 
     # ================================================================================
     # Your code goes above.
@@ -59,13 +76,15 @@ class CalculationsController < ApplicationController
     #   So if you subtract one time from another, you will get an integer
     #   number of seconds as a result.
     # ================================================================================
-
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    starting = @starting
+    ending = @ending
+    difference = ending-starting
+    @seconds = difference
+    @minutes = difference/60
+    @hours = difference/(60*60)
+    @days = difference/(60*60*24)
+    @weeks = difference/(60*60*24*7)
+    @years = difference/(60*60*24*365.25)
 
     # ================================================================================
     # Your code goes above.
@@ -82,13 +101,15 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    numberArray = @numbers
 
-    @count = "Replace this string with your answer."
+    @sorted_numbers = numberArray.sort
 
-    @minimum = "Replace this string with your answer."
+    @count = numberArray.length
 
-    @maximum = "Replace this string with your answer."
+    @minimum = numberArray.min
+
+    @maximum = numberArray.max
 
     @range = "Replace this string with your answer."
 
