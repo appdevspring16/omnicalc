@@ -100,7 +100,52 @@ class CalculationsController < ApplicationController
     # Your code goes below.
     # The numbers the user input are in the array @numbers.
     # ================================================================================
-
+    def median numberArray
+      numberArray = numberArray.sort
+      length_array = numberArray.length
+      length_array = length_array.to_i
+      if length_array.odd?
+        half = length_array/2
+        return numberArray[half]
+      else
+        half = length_array/2
+        return (numberArray[half-1]+numberArray[half])/2
+      end
+    end
+    def sum numberArray
+      total = 0
+      for i in 0..numberArray.length-1
+        total = total + numberArray[i]
+      end
+      return total
+    end
+    def mean numberArray
+      return sum(numberArray)/numberArray.length
+    end
+    def variance numberArray
+      total = 0
+      mean = mean(numberArray)
+      for i in 0..numberArray.length-1
+        total = total + (numberArray[i]-mean)**2
+      end
+      return total/numberArray.length
+    end
+    def mode numberArray
+      testCount = 0
+      for i in 0..numberArray.length-1
+        count = 0
+        for j in i..numberArray.length-1
+          if numberArray[i]==numberArray[j]
+            count = count + 1
+          end
+        end
+        if count > testCount
+          testCount = count
+          modeValue = numberArray[i]
+        end
+      end
+      return modeValue
+    end
     numberArray = @numbers
 
     @sorted_numbers = numberArray.sort
@@ -111,19 +156,19 @@ class CalculationsController < ApplicationController
 
     @maximum = numberArray.max
 
-    @range = "Replace this string with your answer."
+    @range = numberArray.max - numberArray.min
 
-    @median = "Replace this string with your answer."
+    @median = median(numberArray)
 
-    @sum = "Replace this string with your answer."
+    @sum = sum(numberArray)
 
-    @mean = "Replace this string with your answer."
+    @mean = mean(numberArray)
 
-    @variance = "Replace this string with your answer."
+    @variance = variance(numberArray)
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = variance(numberArray)**0.5
 
-    @mode = "Replace this string with your answer."
+    @mode = mode(numberArray)
 
     # ================================================================================
     # Your code goes above.
