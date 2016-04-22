@@ -71,12 +71,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
     dif= @ending - @starting
-    @seconds = (dif/1.seconds).round
-    @minutes = (dif/1.minutes).round
-    @hours = (dif/1.hours).round
-    @days = (dif/1.days).round
-    @weeks = (dif/1.weeks).round
-    @years = (dif/1.years).round
+    @seconds = (dif/1.seconds)
+    @minutes = (dif/1.minutes)
+    @hours = (dif/1.hours)
+    @days = (dif/1.days)
+    @weeks = (dif/1.weeks)
+    @years = (dif/1.years)
 
     # ================================================================================
     # Your code goes above.
