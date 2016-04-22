@@ -93,19 +93,17 @@ class CalculationsController < ApplicationController
 
     @range = @numbers.max - @numbers.min
 
-    @median =
-
 odd_middle = @count/2+1
 even_middle1 = (@count/2)-1
 even_middle2 = (@count/2)
-even_sum = (@sorted_numbers[even_middle1] + @sorted_numbers[even_middle2]).to_f
 
     if @count.odd? == true
       median = @sorted_numbers[odd_middle].to_f
     elsif @count.odd? != true
-      median = even_sum.to_f
+      median = ((@sorted_numbers[even_middle1] + @sorted_numbers[even_middle2])/2).to_f
     end
 
+  @median = median
 
     @sum = @numbers.sum
 
