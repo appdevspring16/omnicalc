@@ -39,7 +39,7 @@ class CalculationsController < ApplicationController
     #   @word_count = count + 1
     # end
 
-    temp_text = @text.downcase
+    temp_text = words.downcase
     @special_word = @special_word.downcase
 
     temp_text = temp_text.gsub(".","")
