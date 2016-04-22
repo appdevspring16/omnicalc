@@ -1,23 +1,36 @@
 class CalculationsController < ApplicationController
-
+  def without_spaces stringSample
+    return stringSample.length - stringSample.count(' ')
+  end
+  def word_counter textArray
+    return textArray.length
+  end
+  def occurances textArray,specWord
+    count = 0
+    for i in 0..textArray.length-1
+      if textArray[i]==specWord
+        count = count + 1
+      end
+    end
+    return count
+  end
   def word_count
     @text = params[:user_text]
     @special_word = params[:user_word]
 
-    # ================================================================================
-    # Your code goes below.
-    # The text the user input is in the string @text.
-    # The special word the user input is in the string @special_word.
-    # ================================================================================
+    text = @text
+    special_word = @special_word
+    special_word.downcase
+    textArray = text.split(/\W+/)
+    textArray = textArray.map{ |item| item.downcase }
 
+    @character_count_with_spaces = text.length
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = without_spaces(text)
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @word_count = word_counter(textArray)
 
-    @word_count = "Replace this string with your answer."
-
-    @occurrences = "Replace this string with your answer."
+    @occurrences = occurances(textArray,special_word)
 
     # ================================================================================
     # Your code goes above.
@@ -37,8 +50,14 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
+    apr = @apr/(100*12)
+    years = @years
+    principal = @principal
+    num = apr*principal
+    power = (1+apr)**(-years*12)
+    den = 1-power
+    monthly_payment = num/den
+    @monthly_payment = monthly_payment
 
     # ================================================================================
     # Your code goes above.
@@ -59,13 +78,15 @@ class CalculationsController < ApplicationController
     #   So if you subtract one time from another, you will get an integer
     #   number of seconds as a result.
     # ================================================================================
-
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    starting = @starting
+    ending = @ending
+    difference = ending-starting
+    @seconds = difference
+    @minutes = difference/60
+    @hours = difference/(60*60)
+    @days = difference/(60*60*24)
+    @weeks = difference/(60*60*24*7)
+    @years = difference/(60*60*24*365.25)
 
     # ================================================================================
     # Your code goes above.
@@ -81,28 +102,75 @@ class CalculationsController < ApplicationController
     # Your code goes below.
     # The numbers the user input are in the array @numbers.
     # ================================================================================
+    def median numberArray
+      numberArray = numberArray.sort
+      length_array = numberArray.length
+      length_array = length_array.to_i
+      if length_array.odd?
+        half = length_array/2
+        return numberArray[half]
+      else
+        half = length_array/2
+        return (numberArray[half-1]+numberArray[half])/2
+      end
+    end
+    def sum numberArray
+      total = 0
+      for i in 0..numberArray.length-1
+        total = total + numberArray[i]
+      end
+      return total
+    end
+    def mean numberArray
+      return sum(numberArray)/numberArray.length
+    end
+    def variance numberArray
+      total = 0
+      mean = mean(numberArray)
+      for i in 0..numberArray.length-1
+        total = total + (numberArray[i]-mean)**2
+      end
+      return total/numberArray.length
+    end
+    def mode numberArray
+      testCount = 0
+      for i in 0..numberArray.length-1
+        count = 0
+        for j in i..numberArray.length-1
+          if numberArray[i]==numberArray[j]
+            count = count + 1
+          end
+        end
+        if count > testCount
+          testCount = count
+          modeValue = numberArray[i]
+        end
+      end
+      return modeValue
+    end
+    numberArray = @numbers
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = numberArray.sort
 
-    @count = "Replace this string with your answer."
+    @count = numberArray.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = numberArray.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = numberArray.max
 
-    @range = "Replace this string with your answer."
+    @range = numberArray.max - numberArray.min
 
-    @median = "Replace this string with your answer."
+    @median = median(numberArray)
 
-    @sum = "Replace this string with your answer."
+    @sum = sum(numberArray)
 
-    @mean = "Replace this string with your answer."
+    @mean = mean(numberArray)
 
-    @variance = "Replace this string with your answer."
+    @variance = variance(numberArray)
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = variance(numberArray)**0.5
 
-    @mode = "Replace this string with your answer."
+    @mode = mode(numberArray)
 
     # ================================================================================
     # Your code goes above.
