@@ -3,6 +3,7 @@ class CalculationsController < ApplicationController
   def word_count
     @text = params[:user_text]
     @special_word = params[:user_word]
+    check_word = @special_word
 
     # ================================================================================
     # Your code goes below.
@@ -11,13 +12,24 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.chomp.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    number_of_spaces = @text.count(" ")
+    @character_count_without_spaces = @character_count_with_spaces - number_of_spaces
 
-    @word_count = "Replace this string with your answer."
+    text_array = @text.split
+    @word_count = text_array.length
 
-    @occurrences = "Replace this string with your answer."
+    i = 0
+
+    text_array.each do |word_text|
+      if word_text == check_word
+        i = i + 1
+      end
+    end
+
+
+    @occurrences = i
 
     # ================================================================================
     # Your code goes above.
@@ -37,8 +49,8 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
+    apr_p = @apr/100/12
+    @monthly_payment = @principal*apr_p/(1 - (1 + apr_p)**(-@years*12))
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +72,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +94,56 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @sorted_numbers[0]
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @sorted_numbers[@count-1]
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    if @count.odd?
+      @median = @sorted_numbers[@count/2]
+    else
+      @median = (@sorted_numbers[@count/2]+@sorted_numbers[@count/2-1])/2
+    end
 
-    @sum = "Replace this string with your answer."
+    sum_n = 0
+    @numbers.each do |number|
+      sum_n = sum_n + number
+    end
 
-    @mean = "Replace this string with your answer."
+    @sum = sum_n
 
-    @variance = "Replace this string with your answer."
+    @mean = sum_n/@count
 
-    @standard_deviation = "Replace this string with your answer."
+    sum_q = 0
+    @numbers.each do |number|
+      sum_q = sum_q + (number - @mean)**2
+    end
 
-    @mode = "Replace this string with your answer."
+    @variance = sum_q/@count
+
+    @standard_deviation = @variance**0.5
+
+    freq = []
+    i = 0
+    @numbers.each do |number|
+      @numbers.each do |number_i|
+        freq[i]=1
+        if number_i == number
+          freq[i] = freq[i] + 1
+        end
+        i = i + 1
+      end
+      i = 0
+    end
+
+    mode_index = freq.index(freq.sort[freq.length-1])
+
+    @mode = @numbers[mode_index]
 
     # ================================================================================
     # Your code goes above.
