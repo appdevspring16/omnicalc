@@ -69,12 +69,12 @@ class CalculationsController < ApplicationController
       #   number of seconds as a result.
       # ================================================================================
 
-      @seconds = "Replace this string with your answer."
-      @minutes = "Replace this string with your answer."
-      @hours = "Replace this string with your answer."
-      @days = "Replace this string with your answer."
-      @weeks = "Replace this string with your answer."
-      @years = "Replace this string with your answer."
+      @seconds = @ending-@starting
+      @minutes = (@seconds/60).round
+      @hours = @minutes/60.round
+      @days = @hours/24.round
+      @weeks = @days/7.round
+      @years = @weeks/52.round
 
       # ================================================================================
       # Your code goes above.
@@ -91,27 +91,31 @@ class CalculationsController < ApplicationController
       # The numbers the user input are in the array @numbers.
       # ================================================================================
 
-      @sorted_numbers = "Replace this string with your answer."
 
-      @count = "Replace this string with your answer."
 
-      @minimum = "Replace this string with your answer."
+      @sorted_numbers = @numbers.sort
 
-      @maximum = "Replace this string with your answer."
+      @count = @numbers.length
 
-      @range = "Replace this string with your answer."
+      @minimum = @numbers.min
+
+      @maximum = @numbers.max
+
+      @range = @minimum.to_s + "" + @maximum.to_s
 
       @median = "Replace this string with your answer."
 
-      @sum = "Replace this string with your answer."
+      @sum =
 
-      @mean = "Replace this string with your answer."
+      @mean =
 
       @variance = "Replace this string with your answer."
 
       @standard_deviation = "Replace this string with your answer."
 
       @mode = "Replace this string with your answer."
+
+
 
       # ================================================================================
       # Your code goes above.
