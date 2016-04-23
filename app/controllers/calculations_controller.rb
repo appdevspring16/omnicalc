@@ -13,15 +13,19 @@ class CalculationsController < ApplicationController
 
     @character_count_with_spaces = @text.length
 
-    z=@text.delete " "
+    z=@text.delete "\n"
+    z=z.gsub(/\s+/, "")
     @character_count_without_spaces = z.length
 
     x= @text.count " "
     x=x+1
     @word_count = x
 
-    @occurrences = @text.downcase.scan(@special_word).count
-
+    if @special_word != ""
+      @occurrences = @text.downcase.scan(@special_word).count
+    else
+      @occurrences = 0
+    end
     # ================================================================================
     # Your code goes above.
     # ================================================================================

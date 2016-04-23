@@ -1706,3 +1706,195 @@ Processing by CalculationsController#descriptive_statistics as HTML
   Parameters: {"list_of_numbers"=>"2 5"}
   Rendered calculations/descriptive_statistics.html.erb within layouts/application (0.0ms)
 Completed 200 OK in 102ms (Views: 101.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/new" for ::1 at 2016-04-23 00:52:28 -0500
+Processing by CalculationsController#word_count_form as HTML
+  Rendered calculations/word_count_form.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 132ms (Views: 131.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 00:52:50 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 112ms (Views: 111.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 00:54:25 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 134ms (Views: 133.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 00:56:22 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 131ms (Views: 130.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 00:57:32 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 144ms (Views: 144.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:00:58 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 126ms (Views: 126.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0A%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:01:13 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\n\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 109ms (Views: 108.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=he%5Cnllo%0D%0A%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:03:11 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"he\\nllo\r\n\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 121ms (Views: 120.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0A%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:05:34 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\n\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 136ms (Views: 135.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0A%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:05:58 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\n\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 122ms (Views: 121.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0A%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:06:49 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\n\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 108ms (Views: 107.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:07:13 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 127ms (Views: 127.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:09:50 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 152ms (Views: 151.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:10:03 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 113ms (Views: 112.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:10:52 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms)
+
+NoMethodError (undefined method `gsub' for nil:NilClass):
+  app/controllers/calculations_controller.rb:17:in `word_count'
+
+
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (5.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (830.7ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (821.3ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (1845.2ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:11:29 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms)
+
+NoMethodError (undefined method `gsub' for nil:NilClass):
+  app/controllers/calculations_controller.rb:17:in `word_count'
+
+
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (5.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (862.2ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (775.1ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (1.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.0ms)
+  Rendered C:/RailsInstaller/Ruby2.2.0/lib/ruby/gems/2.2.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (1826.8ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:12:00 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 126ms (Views: 125.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:17:19 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 103ms (Views: 102.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname&user_word=" for ::1 at 2016-04-23 01:20:43 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 104ms (Views: 103.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname%0D%0A&user_word=" for ::1 at 2016-04-23 01:20:58 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname\r\n", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 148ms (Views: 146.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname%0D%0A&user_word=" for ::1 at 2016-04-23 01:21:24 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname\r\n", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 118ms (Views: 117.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname%0D%0A&user_word=" for ::1 at 2016-04-23 01:24:01 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname\r\n", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 130ms (Views: 129.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/word_count/results?user_text=hello%0D%0Aname%0D%0A&user_word=" for ::1 at 2016-04-23 01:25:28 -0500
+Processing by CalculationsController#word_count as HTML
+  Parameters: {"user_text"=>"hello\r\nname\r\n", "user_word"=>""}
+  Rendered calculations/word_count.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 132ms (Views: 131.3ms | ActiveRecord: 0.0ms)
