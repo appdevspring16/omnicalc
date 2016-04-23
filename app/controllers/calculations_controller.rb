@@ -10,14 +10,44 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    @character_count_with_spaces = @text.length();
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    # gsub - global substitute all white space and then count the characters
+    @character_count_without_spaces = @text.gsub(" ", "").length();
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    # split with string space ' ' ignores leading whitespaces and continuous spaces
+    # split returns an array. so find the size for word count
+    @word_count = @text.split(" ").size;
 
-    @word_count = "Replace this string with your answer."
+    # does not work as "t" matches "test" twice
+    # Question: SG:
+    # @occurrences = @text.scan(@special_word).size();
+    #
+    # Question 2: SG
+    # # split into word array and update count hash with each word as key
+    # # since hash key is unique we will have count at the end
+    # @text.split(" ").each { |val|
+    #   # first occurrence of the word in val
+    #   if (! count[val])
+    #     count[val] = 1
+    #     # repeat occurrence of the work in val. so just increment
+    #   else
+    #     count[val] += 1
+    #   }
+    #
+    #   if (! count[@special_word])
+    #     @occurrences = 0;
+    #   else
+    #     @occurrences = count[@special_word];
 
-    @occurrences = "Replace this string with your answer."
+    # split into word array and update count hash with each word as key
+    # since hash key is unique we will have count at the end
+    #  default is 0
+    # Question: SG: why no @ for count
+    count = Hash.new(0);
+    @text.split(" ").each { |val| count[val] += 1}
+
+    @occurrences = count[@special_word];
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +68,16 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    # formula = p * r * (1 + r)^n / ((1 + r)^n - 1)
+    # monthly interest rate
+    @r = (@apr/12)/100;
+    # period in months
+    @n = @years * 12;
+
+    @one_plus_r_power_n = ( 1 + @r) ** @n;
+
+
+    @monthly_payment = ( @principal * @r * @one_plus_r_power_n) / (@one_plus_r_power_n - 1);
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +99,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting;
+    @minutes = @seconds/60
+    @hours = @minutes/60;
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +121,67 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.size
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    # Question: SG: why ? after odd
+    if (@count.odd?)
+      @median = @sorted_numbers[@count/2]
+    else
+      @median = ( @sorted_numbers[@count/2] + @sorted_numbers[(@count/2)-1] ) / 2;
+    end
 
-    @sum = "Replace this string with your answer."
+    @sum = 0;
+    # Question: SG: below @num does not work. when to use @ and when not to?
+    # @numbers.each { |@num| @sum += @num; }
+    @numbers.each { |num| @sum += num; }
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @variance = "Replace this string with your answer."
+    @variance = 0
+    @numbers.each { |num| @variance += (num - @mean)**2; }
+    @variance /= @count
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = @variance**0.5
 
-    @mode = "Replace this string with your answer."
+    count = Hash.new(0);
+    @numbers.each { |num| count[num] += 1 }
+
+    # start by keeping the first number as mode
+    # @mode = @numbers[0]
+    # @numbers.each { |num|
+    #   if (count[num] > count[@mode])
+    #     @mode = num
+    #   end
+    # }
+
+
+    # using keys of the count hash
+    # better than previous method as long as at least one number happens twice or more
+    @mode = @numbers[0]
+    count.keys.each { |num|
+      puts "num = #{num} count = #{count[num]}"
+      if (count[num] > count[@mode])
+        @mode = num
+      end
+    }
+    #
+    # @mode = @numbers[0]
+    # # Note: Cant use hash.each as it gives key val as pairs for parsing
+    # # puts "type of count = #{count.class}"
+    # count.each { |v|
+    #   puts "v = #{v} count[v] = #{count[v]}"
+    #   if (count[v] > count[@mode])
+    #     @mode = v
+    #   end
+    # }
 
     # ================================================================================
     # Your code goes above.
