@@ -77,7 +77,7 @@ class CalculationsController < ApplicationController
     @hours = @minutes / 60
     @days = @hours / 24
     @weeks = @days / 7
-    @years = @weeks / (365.25 / 52)
+    @years = @days / 365.25
 
     # ================================================================================
     # Your code goes above.
