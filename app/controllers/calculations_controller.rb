@@ -11,7 +11,15 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
     @character_count_with_spaces=@text.size
-    @character_count_without_spaces=@text.scan(/\w/).inject(Hash.new(0)){|h, c| h[c] += 1; h}
+
+    @charct_wo_s1=@text.scan(/\w/).inject(Hash.new(0)){|h, c| h[c] += 1; h}
+    # @charct_wo_s2=@text.split(/\S+/).size
+    # @character_count_without_spaces=@charct_wo_s1.to_s + "Total " + @charct_wo_s2.to_s  Hmmmm that didn't work like hoped...
+
+    @Space_Count=@text.count(" ")
+    @char_ct_wo_sp_tot=@character_count_with_spaces - @Space_Count
+    @character_count_without_spaces=@charct_wo_s1.to_s + " or a total of " + @char_ct_wo_sp_tot.to_s
+
     @word_count = @text.split.count
     @occurrences = @text.scan(@special_word).count
 
