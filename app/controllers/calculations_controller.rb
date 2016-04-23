@@ -140,11 +140,11 @@ class CalculationsController < ApplicationController
     @index_mode = 0
     @count_mode = 1
     @max_mode = 1
-    @mode_count = 1
+    @num_mode = 1
     while @count_mode <= @count
       if @sorted_numbers[@count_mode] == @sorted_numbers[@count_mode - 1]
-      @mode_count += 1
-      elsif @mode_count > @max_mode
+      @num_mode += 1
+    elsif @num_mode > @max_mode
         @index_mode = @count_mode - 1
     end
     @count_mode += 1
