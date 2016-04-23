@@ -67,7 +67,16 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    # formula = p * r * (1 + r)^n / ((1 + r)^n - 1)
+# monthly interest rate
+    @r = (@apr/12)/100;
+    # period in months
+    @n = @years * 12;
+
+    @one_plus_r_power_n = ( 1 + @r) ** @n;
+
+
+    @monthly_payment = ( @principal * @r * @one_plus_r_power_n) / (@one_plus_r_power_n - 1);
 
     # ================================================================================
     # Your code goes above.
