@@ -101,13 +101,13 @@ class CalculationsController < ApplicationController
 
       @maximum = @numbers.max
 
-      @range = @minimum.to_s + "" + @maximum.to_s
+      @range = "#{@numbers[0]}" + " through " + "#{@numbers.last}"
 
       @median = "Replace this string with your answer."
 
-      @sum =
+      @sum = @numbers.sum
 
-      @mean =
+      @mean = @sum.to_f / @count
 
       @variance = "Replace this string with your answer."
 
