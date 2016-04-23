@@ -11,14 +11,20 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    z=@text.delete "\n"
+    z=z.gsub(/\s+/, "")
+    @character_count_without_spaces = z.length
 
-    @word_count = "Replace this string with your answer."
+    x= @text.split
+    @word_count = x.length
 
-    @occurrences = "Replace this string with your answer."
-
+    if @special_word != ""
+      @occurrences = @text.downcase.scan(@special_word).count
+    else
+      @occurrences = 0
+    end
     # ================================================================================
     # Your code goes above.
     # ================================================================================
@@ -31,14 +37,19 @@ class CalculationsController < ApplicationController
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
 
+
+
     # ================================================================================
     # Your code goes below.
     # The annual percentage rate the user input is in the decimal @apr.
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
+    aprmonths = @apr / 100 / 12
+    months = @years * 12
+    @monthly_payment = @principal * (aprmonths * ((1 + aprmonths)**months)) / (((1 + aprmonths)**months) - 1)
 
-    @monthly_payment = "Replace this string with your answer."
+
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +71,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds / 60
+    @hours = @seconds / 60 / 60
+    @days = @seconds / 60 / 60 / 24
+    @weeks = @seconds / 60 / 60 / 24 / 7
+    @years = @seconds / 60 / 60 / 24 / 365.25
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +93,63 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
 
-    @maximum = "Replace this string with your answer."
+    @minimum = @numbers.sort.first
 
-    @range = "Replace this string with your answer."
+    @maximum = @numbers.sort.last
 
-    @median = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @sum = "Replace this string with your answer."
+    len = @sorted_numbers.length
+    @median = (@sorted_numbers[(len - 1) / 2] + @sorted_numbers[len / 2]) / 2.0
 
-    @mean = "Replace this string with your answer."
+    @sum=0
+    @numbers.each do |num|
+      @sum= num + @sum
+    end
 
-    @variance = "Replace this string with your answer."
+    @mean = @sum / @count
 
-    @standard_deviation = "Replace this string with your answer."
+    sum2 = 0
+    @numbers.each do |num|
+      sum2 = sum2 + ((num - @mean) * (num - @mean))
+    end
 
-    @mode = "Replace this string with your answer."
+    @variance = sum2 / @count
+
+    @standard_deviation = Math.sqrt(@variance)
+
+    curr_count = 0
+    counter = 0
+    x = 0
+    test_count = 0
+    test_mode = 0
+    @sorted_numbers.each do |num|
+      if x==0
+        test_mode = num
+        @mode = num
+        test_count = 1
+        x=1
+      else
+        if num == test_mode
+          test_count = test_count + 1
+        else
+          if curr_count < test_count
+            @mode = test_mode
+            curr_count = test_count
+            test_mode = num
+            test_count = 1
+          else
+            test_mode = num
+            test_count = 1
+          end
+        end
+      end
+    end
 
     # ================================================================================
     # Your code goes above.
