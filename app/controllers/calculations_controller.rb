@@ -77,33 +77,36 @@ class CalculationsController < ApplicationController
 
   def descriptive_statistics
     @numbers = params[:list_of_numbers].gsub(',', '').split.map(&:to_f)
+    @sorted_numbers = @numbers.sort
+    @len = @sorted_numbers.length
+
 
     # ================================================================================
     # Your code goes below.
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    @median = (@sorted_numbers[(@len - 1) / 2] + @sorted_numbers[@len / 2]) / 2.0
 
-    @sum = "Replace this string with your answer."
+    @sum = @numbers.inject(0, :+)
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @variance = "Replace this string with your answer."
+    @variance = @numbers.inject(0.0) {|s,x| s + (x - @mean)**2}
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = @variance**0.5
 
-    @mode = "Replace this string with your answer."
+    @mode = @numbers.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
 
     # ================================================================================
     # Your code goes above.
