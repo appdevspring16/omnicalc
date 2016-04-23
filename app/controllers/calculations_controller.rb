@@ -10,14 +10,33 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    # total number of characters
+    @character_count_with_spaces = @text.length
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    # total characters without spaces
+    @sanitized_text = @text.gsub(" ", "")
+    @sanitized_text = @sanitized_text.gsub(/[\s]/i,"")
+    @character_count_without_spaces = @sanitized_text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    # word count
+    @text_array = @text.split
+    if @character_count_without_spaces > 0
+      @word_count = @text_array.length
+    else
+      @word_count = 0
+    end
 
-    @word_count = "Replace this string with your answer."
+    # occurrences
+    @special_word = @special_word.downcase
+    @count = 0
+    @occurrences = 0
 
-    @occurrences = "Replace this string with your answer."
+    while @count <= @text_array.length
+      if @text_array[@count].to_s.downcase.gsub(/[^a-z0-9\s]/i, "") == @special_word
+        @occurrences +=1
+      end
+      @count +=1
+    end
 
     # ================================================================================
     # Your code goes above.
@@ -37,8 +56,10 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
-
-    @monthly_payment = "Replace this string with your answer."
+    @interest = @apr / 100 / 12
+    @months = @years * 12
+    @ani = (1-(1+@interest)**(@months*-1)) / @interest
+    @monthly_payment = @principal / @ani
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +81,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds / 60.0
+    @hours = @minutes / 60.0
+    @days = @hours / 24.0
+    @weeks = @days / 7.0
+    @years = @days / 365.25
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +103,53 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @sorted_numbers[0]
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @sorted_numbers[@count - 1]
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    # median
+    if @count%2 == 0
+      @median = (@sorted_numbers[(1+@count)/2] + @sorted_numbers[(1+@count)/2 - 1]) / 2
+    else
+      @median = @sorted_numbers[(1+@count)/2 - 1]
+    end
 
-    @sum = "Replace this string with your answer."
+    @sum = 0
+    @sorted_numbers.each do |sum|
+      @sum += sum
+    end
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum / @count
 
-    @variance = "Replace this string with your answer."
+    # variance
+    @var_sum = 0.0
+    @sorted_numbers.each do |x|
+      @var_sum += (x - @mean)**2
+    end
+    @variance = @var_sum / @count
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = @variance**0.5
 
-    @mode = "Replace this string with your answer."
+    # mode
+    @index_mode = 0
+    @count_mode = 1
+    @max_mode = 1
+    @num_mode = 1
+    while @count_mode <= @count
+      if @sorted_numbers[@count_mode] == @sorted_numbers[@count_mode - 1]
+      @num_mode += 1
+    elsif @num_mode > @max_mode
+        @index_mode = @count_mode - 1
+    end
+    @count_mode += 1
+    end
+    @mode = @sorted_numbers[@index_mode]
 
     # ================================================================================
     # Your code goes above.
