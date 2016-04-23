@@ -10,14 +10,15 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+        #test MH
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = "#{@text.length}"
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = "#{@text.gsub(" ","").length}"
 
-    @word_count = "Replace this string with your answer."
+    @word_count = "#{@text.split.count}"
 
-    @occurrences = "Replace this string with your answer."
+    @occurrences = "#{@text.scan(@special_word).count}"
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +39,8 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    @monthly_payment = "#{(@apr/1200)*@principal*(1+(@apr/1200))**@years/((1+(@apr/1200))**@years-1)}"
+    # "#{(@apr/1200)*@principal*(1+(@apr/1200))^@years)/(1+(@apr/1200))^@years-1)}"
 
     # ================================================================================
     # Your code goes above.
