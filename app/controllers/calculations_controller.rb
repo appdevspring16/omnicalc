@@ -24,7 +24,8 @@ class CalculationsController < ApplicationController
     if @special_word.empty?
       @occurrences="0"
     else
-    @occurrences = count_em(@text, @special_word)
+    word = @special_word.downcase
+    @occurrences = count_em(@text.downcase, word)
     end
     # ================================================================================
     # Your code goes above.
@@ -107,7 +108,9 @@ class CalculationsController < ApplicationController
     else
     mdn = (sort_array[medpos-1] + sort_array[medpos])/2
     end
-    mod=Hash[sort_array.map {|k| [k, 0]}]
+
+    @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    @mode = @numbers.max_by{ |v| @freq[v] }
 
     @sorted_numbers = @numbers.sort
 
@@ -129,8 +132,7 @@ class CalculationsController < ApplicationController
 
     @standard_deviation = stdev.to_s
 
-
-    @mode = mod[6].to_s
+    @mode = @mode.to_s
 
     # ================================================================================
     # Your code goes above.
