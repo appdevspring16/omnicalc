@@ -109,9 +109,9 @@ freq = @numbers.inject(Hash.new(0)) { |h, v| h[v] += 1; h}
 
     @mean = @sum / @count
 
-    @variance = ""
+    @variance = @numbers.inject(0.0) {|s,x| s + (x - @mean)**2}
 
-    @standard_deviation = ""
+    @standard_deviation = @variance**0.5
 
     @mode = @numbers.max_by{ |v| freq[v]}
 
