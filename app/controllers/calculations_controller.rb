@@ -23,6 +23,8 @@ class CalculationsController < ApplicationController
     @word_count = @text.split.count
     @occurrences = @text.scan(@special_word).count
 
+
+
     # instructions
     # @character_count_with_spaces = "Replace this string with your answer."
 
@@ -51,7 +53,14 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    @p_apr=@apr/100
+
+    @numer=@p_apr*(1+@p_apr)**(@years)
+    @denom=((1+@p_apr)**(@years))-1
+    @PMT_factor=@numer/@denom
+
+
+    @monthly_payment = @PMT_factor*@principal
 
     # ================================================================================
     # Your code goes above.
