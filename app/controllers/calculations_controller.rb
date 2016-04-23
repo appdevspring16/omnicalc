@@ -18,7 +18,7 @@ class CalculationsController < ApplicationController
 
     @word_count = @text.split(" ").count
 
-    @occurrences = @special_word.length
+    @occurrences = @text.split.count(@special_word)
 
     # ================================================================================
     # Your code goes above.
@@ -93,17 +93,27 @@ class CalculationsController < ApplicationController
 
     @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    @median = (@sorted_numbers[(@count / 2)-1])+(((@sorted_numbers[(@count / 2)])-(@sorted_numbers[(@count / 2)-1]))/2)
 
     @sum = @numbers.sum
 
     @mean = @sum / @count
 
     @variance =
+        i=0
+        running_total=0
+        while i<@numbers.length
+        running=@numbers[i]-@mean
+        running_total=running_total+running**2
+        i=i+1
+      end
+      @variance = (running_total)/@count
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = @variance**(1/2)
 
-    @mode = "Replace this string with your answer."
+    @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    @mode = @numbers.max_by{ |v| @freq[v] }
+
 
     # ================================================================================
     # Your code goes above.
