@@ -15,11 +15,18 @@ class CalculationsController < ApplicationController
 
     @character_count_without_spaces = @text.gsub(/\s+/, "").length
 
-    @word_count = @text.scan(/(\w|-)+/).size
+    @word_count = @text.split.count
 
+    @aa = @text.downcase.split
+    @q = 0
 
-    xx = @special_word
-    @occurrences = @text.downcase.scan(/ @special_word %>/).count
+    for i in 1..@aa.count
+      if @aa[i-1] == @special_word.downcase
+        @q += 1
+      end
+    end
+
+    @occurrences = @q
 
     # @text.count('t')
 
@@ -116,15 +123,35 @@ class CalculationsController < ApplicationController
     @rr = 0
 
     while @nn > -1
-      @rr += (@numbers[@nn]-@mean)**2
+      @rr += (@sorted[@nn]-@mean)**2
       @nn -= 1
     end
 
-    @variance = @rr/@count
+    @variance = @rr/(@count-1)
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = @variance**(0.5)
 
-    @mode = "Replace this string with your answer."
+    @ar = []
+    @mm = []
+    for y in 1..(@count)
+      @aq = 0
+      for x in 1..@count
+        if @numbers[y-1] == @numbers[x-1]
+          @aq +=1
+        end
+      end
+      @ar.push(@aq)
+    end
+    @br = []
+    if @ar.max != 1
+      for x in 1..@count
+        if @ar[x] == @ar.max
+          @br.push(@numbers[x])
+        end
+      end
+    end
+
+    @mode = @br.uniq
 
     # ================================================================================
     # Your code goes above.
