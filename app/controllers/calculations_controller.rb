@@ -102,10 +102,10 @@ class CalculationsController < ApplicationController
     vari = vars/fl_array.length
     stdev = vari**0.5
     mdn = 0.0
-    if fl_array.length.odd == true
+    if fl_array.length.odd? == true
     mdn = sort_array[medpos]
     else
-    mdn = (sort_array[medpos] + sort_array[medpos+1])/2
+    mdn = (sort_array[medpos-1] + sort_array[medpos])/2
     end
     mod=Hash[sort_array.map {|k| [k, 0]}]
 
