@@ -101,7 +101,12 @@ class CalculationsController < ApplicationController
     fl_array.each { |numb| vars = vars + ((numb-mn)**2) }
     vari = vars/fl_array.length
     stdev = vari**0.5
-
+    mdn = 0.0
+    if fl_array.length.odd == true
+    mdn = sort_array[medpos]
+    else
+    mdn = (sort_array[medpos] + sort_array[medpos+1])/2
+    end
     mod=Hash[sort_array.map {|k| [k, 0]}]
 
     @sorted_numbers = @numbers.sort
@@ -114,7 +119,7 @@ class CalculationsController < ApplicationController
 
     @range = (fl_array.sort.last-fl_array.sort.first).to_s
 
-    @median = sort_array[medpos].to_s
+    @median = mdn.to_s
 
     @sum = total.to_s
 
@@ -123,6 +128,7 @@ class CalculationsController < ApplicationController
     @variance = vari.to_s
 
     @standard_deviation = stdev.to_s
+
 
     @mode = mod[6].to_s
 
