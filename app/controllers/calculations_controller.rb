@@ -7,7 +7,7 @@ class CalculationsController < ApplicationController
 
     text_down = @text.downcase
     #need to stop removing punctuation
-    text_strip = text_down.gsub(/\W/,"")
+    text_strip = text_down.gsub(/\s+/,"")
     text_scrubbed = text_down.gsub(/[^a-z0-9\s]/i, "")
     word_array = text_scrubbed.split(/\W+/)
 
