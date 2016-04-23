@@ -4,18 +4,30 @@ class CalculationsController < ApplicationController
     @text = params[:user_text]
     @special_word = params[:user_word]
 
-    text_strip = @text.strip
-    text_space = text_strip.gsub("  ", " ")
-    text_no_space = text_strip.gsub(/[^[:alnum]]/, "")
-    text_dash = text_space.gsub(" ", "-")
+
+    text_down = @text.downcase
+    #need to stop removing punctuation
+    text_strip = text_down.gsub(/\W/,"")
+    text_scrubbed = text_down.gsub(/[^a-z0-9\s]/i, "")
+    word_array = text_scrubbed.split(/\W+/)
 
     @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = text_no_space.length
+    @character_count_without_spaces = text_strip.length
 
-    @word_count = text_dash.to_s
+    @word_count = word_array.length
 
-    @occurrences = "Replace this string with your answer."
+    match_word = @special_word.downcase
+    match_word = match_word.gsub(/[^a-z0-9\s]/i,"")
+    special_cnt = 0
+
+    word_array.each do |word|
+      if word == match_word.downcase
+        special_cnt = special_cnt +1
+      end
+    end
+
+    @occurrences = special_cnt
 
     # ================================================================================
     # Your code goes above.
@@ -92,17 +104,57 @@ class CalculationsController < ApplicationController
 
     @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    midpoint = (@count.to_f / 2)
 
-    @sum = "Replace this string with your answer."
+    if midpoint == midpoint.floor
+      @median = (@sorted_numbers[midpoint] + @sorted_numbers[midpoint + 1])/2
+    else
+      midpoint = midpoint.floor
+      @median = @sorted_numbers[midpoint]
+    end
 
-    @mean = "Replace this string with your answer."
+    running_sum = 0
 
-    @variance = "Replace this string with your answer."
+    @numbers.each do |number|
+      running_sum = running_sum + number
+    end
 
-    @standard_deviation = "Replace this string with your answer."
+    @sum = running_sum
 
-    @mode = "Replace this string with your answer."
+    @mean = @sum / @count
+     var_sum = 0
+
+    @numbers.each do |number|
+      var_sum = var_sum + (number - @mean) ** 2
+    end
+
+    @variance = var_sum / @count
+
+    @standard_deviation = (@variance) ** (0.5)
+
+    numbers_unique = @numbers.uniq
+
+    mode_array = Array.new
+
+    numbers_unique.each do |uniq_num|
+      mode_cnt = 0
+      idx = 0
+      while idx < @sorted_numbers.length
+        if uniq_num == @sorted_numbers[idx]
+          mode_cnt = mode_cnt +1
+          idx = idx + 1
+        else
+          idx = idx +1
+        end
+      end
+      mode_array.push(mode_cnt)
+    end
+
+    mode_array_sort = mode_array.sort
+
+    mode_idx = mode_array.index(mode_array_sort[mode_array_sort.length-1])
+
+    @mode = numbers_unique[mode_idx]
 
     # ================================================================================
     # Your code goes above.
