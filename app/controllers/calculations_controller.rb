@@ -94,17 +94,17 @@ class CalculationsController < ApplicationController
 
     @range = "#{@numbers.max - @numbers.min}"
 
-    @median = "#{@numbers.median}"
+    @median = "ss"
 
     @sum = "#{@numbers.sum}"
 
-    @mean = "Replace this string with your answer."
+    @mean = "#{@numbers.sum / @numbers.count}"
 
-    @variance = "Replace this string with your answer."
+    @variance = "#{@numbers.sum - (@numbers.sum / @numbers.count)}"
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = "}"
 
-    @mode = "Replace this string with your answer."
+    @mode = "mode"
 
     # ================================================================================
     # Your code goes above.
