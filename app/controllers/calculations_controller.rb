@@ -10,14 +10,43 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    @character_count_with_spaces = @text.length();
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    # gsub - global substitute all white space and then count the characters
+    @character_count_without_spaces = @text.gsub(" ", "").length();
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    # split with string space ' ' ignores leading whitespaces and continuous spaces
+    # split returns an array. so find the size for word count
+    @word_count = @text.split(" ").size;
 
-    @word_count = "Replace this string with your answer."
+    # does not work as "t" matches "test" twice
+    # Question: SG:
+    # @occurrences = @text.scan(@special_word).size();
+    #
+    # Question 2: SG
+    # # split into word array and update count hash with each word as key
+    # # since hash key is unique we will have count at the end
+    # @text.split(" ").each { |val|
+    #   # first occurrence of the word in val
+    #   if (! count[val])
+    #     count[val] = 1
+    #     # repeat occurrence of the work in val. so just increment
+    #   else
+    #     count[val] += 1
+    #   }
+    #
+    #   if (! count[@special_word])
+    #     @occurrences = 0;
+    #   else
+    #     @occurrences = count[@special_word];
 
-    @occurrences = "Replace this string with your answer."
+    # split into word array and update count hash with each word as key
+    # since hash key is unique we will have count at the end
+    #  default is 0
+    count = Hash.new(0);
+    @text.split(" ").each { |val| count[val] += 1}
+
+    @occurrences = count[@special_word];
 
     # ================================================================================
     # Your code goes above.
