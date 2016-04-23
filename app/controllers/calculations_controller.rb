@@ -103,17 +103,19 @@ class CalculationsController < ApplicationController
 
       @range = "#{@numbers[0]}" + " through " + "#{@numbers.last}"
 
-      @median = "Replace this string with your answer."
+      @median =
 
       @sum = @numbers.sum
 
       @mean = @sum.to_f / @count
 
-      @variance = "Replace this string with your answer."
+      @variance = @numbers.inject(0.0) {|s,x| s + (x - @mean)**2}
 
-      @standard_deviation = "Replace this string with your answer."
+      @standard_deviation = @variance**0.5
 
-      @mode = "Replace this string with your answer."
+      @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+
+      @mode = @numbers.max_by{ |v| @freq[v] }
 
 
 
