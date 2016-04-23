@@ -19,7 +19,7 @@ class CalculationsController < ApplicationController
 
     @word_count = @text.split(" ").count
 
-    @occurrences = "Still trying"
+    @occurrences = @text.split.count(@special_word)
 
     # ================================================================================
     # Your code goes above.
