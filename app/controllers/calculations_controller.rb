@@ -17,7 +17,7 @@ class CalculationsController < ApplicationController
 
     @word_count = @text.length - @text.gsub(" ","").length + 1
 
-    @occurrences = 0
+    @occurrences = @text.split.count(@special_word)
 
     # ================================================================================
     # Your code goes above.
@@ -83,27 +83,39 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    if @count.even?
+      @middle = (@sorted_numbers[@count/2]+@sorted_numbers[@count/2+1])/2
+    else
+      @middle = @sorted_numbers[@count/2+0.5]
+    end
 
-    @sum = "Replace this string with your answer."
+    @median = @sorted_numbers[@middle]
 
-    @mean = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @variance = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @standard_deviation = "Replace this string with your answer."
+    @numbers.each do |number|
+    @veriance1 = (number-@mean)**2
+    end
 
-    @mode = "Replace this string with your answer."
+    @variance = @veriance1/@count
+
+    @standard_deviation = @variance**0.5
+
+    @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+
+    @mode = @numbers.max_by{ |v| @freq[v] }
 
     # ================================================================================
     # Your code goes above.
