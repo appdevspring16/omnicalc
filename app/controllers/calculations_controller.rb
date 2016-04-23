@@ -86,6 +86,9 @@ class CalculationsController < ApplicationController
 
     fl_array = []
     fl_array = @numbers.map(&:to_f)
+    sort_array = []
+    sort_array = fl_array.sort
+    mode_array = []
     total = 0
     medpos = 0
     stdev = 0.0
@@ -94,11 +97,12 @@ class CalculationsController < ApplicationController
     mn = 0.0
     fl_array.each { |num| total = total + num }
     medpos = fl_array.length/2
-    mn = total/fl_array.length
-    fl_array.each { |num| vars = (num-mn)**2 }
-    vari = vars/total
+    mn = total.to_f/fl_array.length
+    fl_array.each { |numb| vars = vars + ((numb-mn)**2) }
+    vari = vars/fl_array.length
     stdev = vari**0.5
 
+    mod=Hash[sort_array.map {|k| [k, 0]}]
 
     @sorted_numbers = @numbers.sort
 
@@ -110,7 +114,7 @@ class CalculationsController < ApplicationController
 
     @range = (fl_array.sort.last-fl_array.sort.first).to_s
 
-    @median = fl_array[medpos].to_s
+    @median = sort_array[medpos].to_s
 
     @sum = total.to_s
 
@@ -120,7 +124,7 @@ class CalculationsController < ApplicationController
 
     @standard_deviation = stdev.to_s
 
-    @mode = "Replace this string with your answer."
+    @mode = mod[6].to_s
 
     # ================================================================================
     # Your code goes above.
