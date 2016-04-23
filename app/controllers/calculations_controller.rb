@@ -43,6 +43,7 @@ class CalculationsController < ApplicationController
     # split into word array and update count hash with each word as key
     # since hash key is unique we will have count at the end
     #  default is 0
+    # Question: SG: why no @ for count
     count = Hash.new(0);
     @text.split(" ").each { |val| count[val] += 1}
 
@@ -120,27 +121,67 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.size
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    # Question: SG: why ? after odd
+    if (@count.odd?)
+      @median = @sorted_numbers[@count/2]
+    else
+      @median = ( @sorted_numbers[@count/2] + @sorted_numbers[(@count/2)-1] ) / 2;
+    end
 
-    @sum = "Replace this string with your answer."
+    @sum = 0;
+    # Question: SG: below @num does not work. when to use @ and when not to?
+    # @numbers.each { |@num| @sum += @num; }
+    @numbers.each { |num| @sum += num; }
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @variance = "Replace this string with your answer."
+    @variance = 0
+    @numbers.each { |num| @variance += (num - @mean)**2; }
+    @variance /= @count
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = @variance**0.5
 
-    @mode = "Replace this string with your answer."
+    count = Hash.new(0);
+    @numbers.each { |num| count[num] += 1 }
+
+    # start by keeping the first number as mode
+    # @mode = @numbers[0]
+    # @numbers.each { |num|
+    #   if (count[num] > count[@mode])
+    #     @mode = num
+    #   end
+    # }
+
+
+    # using keys of the count hash
+    # better than previous method as long as at least one number happens twice or more
+    @mode = @numbers[0]
+    count.keys.each { |num|
+      puts "num = #{num} count = #{count[num]}"
+      if (count[num] > count[@mode])
+        @mode = num
+      end
+    }
+    #
+    # @mode = @numbers[0]
+    # # Note: Cant use hash.each as it gives key val as pairs for parsing
+    # # puts "type of count = #{count.class}"
+    # count.each { |v|
+    #   puts "v = #{v} count[v] = #{count[v]}"
+    #   if (count[v] > count[@mode])
+    #     @mode = v
+    #   end
+    # }
 
     # ================================================================================
     # Your code goes above.
