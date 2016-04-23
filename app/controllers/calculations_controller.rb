@@ -103,7 +103,7 @@ class CalculationsController < ApplicationController
 
       @range = "#{@numbers[0]}" + " through " + "#{@numbers.last}"
 
-      @median =
+      @median = (@sorted_numbers[(@count-1)/2] + @sorted_numbers[@count/2]) / 2
 
       @sum = @numbers.sum
 
