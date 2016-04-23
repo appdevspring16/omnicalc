@@ -19,8 +19,10 @@ class CalculationsController < ApplicationController
 
     @word_count = wordsarray.length
 
-    @occurrences = @text.scan(/#{@special_word}/).length
+    # @occurrences = @text.scan(/#{@special_word}/).length
     #  @occurrences = @special_word.class
+
+    @occurrences = wordsarray.count(@special_word)
 
     # ================================================================================
     # Your code goes above.
@@ -136,16 +138,24 @@ class CalculationsController < ApplicationController
 
     @standard_deviation = Math.sqrt(@variance)
 
-sorted=@numbers.sort
-def stringize(my_array)
-  stringized=[]
-  my_array.each do |elems|
-    stringized.push(elems.to_s)
-  end
-  return stringized
-end
+# sorted=@numbers.sort
+# def stringize(my_array)
+#   stringized=[]
+#   my_array.each do |elems|
+#     stringized.push(elems.to_s)
+#   end
+#   return stringized
+# end
 
     # @mode = "Replace this string with your answer."
+
+counter=Hash.new(0)
+sorted=@numbers.sort
+sorted.each do |letter|
+  counter[letter] = counter[letter]+1
+end
+
+@mode = counter.key(counter.values.max)
 
     # ================================================================================
     # Your code goes above.
