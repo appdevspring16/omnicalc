@@ -85,7 +85,7 @@ end
     @hours = ((@ending-@starting)/60)/60
     @days = (((@ending-@starting)/60)/60)/24
     @weeks = ((((@ending-@starting)/60)/60)/24)/7
-    @years = (((((@ending-@starting)/60)/60)/24)/7)/52
+    @years = (((((@ending-@starting)/60)/60)/24)/365)
 
     # ================================================================================
     # Your code goes above.
@@ -139,29 +139,26 @@ end
     @variance = running_total/@count
 
     @standard_deviation = Math.sqrt(@variance)
-# i=0
-# arr_created=[]
-# while i<@numbers.length
-#   holder=@numbers[i].count
-#   arr_created=holder.push
-# end
-#
-#arr_created.max
 
-i=0
-new_array=[]
-count=0
-while i<@numbers.length
-  @numbers.each do |num|
-    if num=@numbers[i]
-      count=count+1
-      new_array.push(count)
+
+def mode(array)
+  counter = Hash.new(0)
+
+  array.each do |i|
+    counter[i] += 1
+  end
+
+  mode_array = []
+
+  counter.each do |a, b|
+    if b == counter.values.max
+      mode_array << a
     end
   end
-    i=i+1
-  end
+  mode_array.sort
 
-    @mode = new_array.max
+end
+    @mode = mode(@numbers)
 
     # ================================================================================
     # Your code goes above.
