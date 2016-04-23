@@ -107,7 +107,7 @@ class CalculationsController < ApplicationController
     midpoint = (@count.to_f / 2)
 
     if midpoint == midpoint.floor
-      @median = (@sorted_numbers[midpoint] + @sorted_numbers[midpoint + 1])/2
+      @median = (@sorted_numbers[midpoint - 1] + @sorted_numbers[midpoint])/2
     else
       midpoint = midpoint.floor
       @median = @sorted_numbers[midpoint]
