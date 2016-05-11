@@ -3,7 +3,6 @@ class CalculationsController < ApplicationController
   def word_count
     @text = params[:user_text]
     @special_word = params[:user_word]
-
     # ================================================================================
     # Your code goes below.
     # The text the user input is in the string @text.
@@ -12,12 +11,14 @@ class CalculationsController < ApplicationController
 
     @word_count = @text.split.count
 
-    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = @text.length - @text.count(" ")
+    @character_count_with_spaces = @text.length - @text.count("\n") - @text.count("\r") - @text.count("\t")
 
-    @occurrences = @text.split.count(@special_word) + @text.split.count(@special_word + ".") + @text.split.count(@special_word + ",") + @text.split.count(@special_word + "?") + @text.split.count(@special_word + "!") +
-    @text.split.count(@special_word + "-")
+    @character_count_without_spaces = @text.length - @text.count(" ") - @text.count("\n") - @text.count("\r") - @text.count("\t")
+
+    uniform_text = @text.downcase
+    @occurrences = uniform_text.split.count(@special_word.downcase) + uniform_text.split.count(@special_word.downcase + ".") + uniform_text.split.count(@special_word.downcase + ",") + uniform_text.split.count(@special_word.downcase + "?") + uniform_text.split.count(@special_word.downcase + "!") +
+    uniform_text.split.count(@special_word.downcase + "-")
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +39,7 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = (@principal*(1 + (@apr/100))**@years)/(12*@years)
+    @monthly_payment = (((@apr/12)/100) * @principal * ((1+((@apr/12)/100))**(@years*12)))/(((1+((@apr/12)/100))**(@years*12))-1)
 
     # ================================================================================
     # Your code goes above.
@@ -111,8 +112,21 @@ class CalculationsController < ApplicationController
 
     @standard_deviation = @variance**0.5
 
-    @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    @mode = @numbers.max_by{ |v| @freq[v] }
+    # @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    # @mode = @numbers.max_by{ |v| @freq[v] }
+
+    leader = nil
+    leader_count = 0
+
+        @numbers.each do |num|
+          occurrences = @numbers.count(num)
+          if occurrences > leader_count
+            leader = num
+            leader_count = occurrences
+          end
+        end
+
+        @mode = leader
 
 
     # ================================================================================
