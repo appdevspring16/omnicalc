@@ -10,7 +10,6 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
-
     @character_count_with_spaces = @text.length
 
     @character_count_without_spaces = @text.length - @text.count(' ')
@@ -37,10 +36,10 @@ class CalculationsController < ApplicationController
     # The number of years the user input is in the integer @years.
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
+
     rate = @apr/(100*12)
 
     @monthly_payment = (rate +(rate/(((1+rate)**(@years*12))-1))) * @principal
-
 
     # ================================================================================
     # Your code goes above.
@@ -102,7 +101,7 @@ class CalculationsController < ApplicationController
 
     @variance =
 
-    @standard_deviation = 
+    @standard_deviation =
 
     freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
 
