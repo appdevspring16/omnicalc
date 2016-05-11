@@ -100,6 +100,7 @@ class CalculationsController < ApplicationController
 
     @variance =
 
+
     @standard_deviation =
 
     freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
