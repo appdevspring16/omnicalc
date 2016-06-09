@@ -10,14 +10,13 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    @word_count = @text.split.count
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text.length - @text.count(" ") - @text.count("\n") - @text.count("\t") - @text.count("\r")
 
-    @word_count = "Replace this string with your answer."
-
-    @occurrences = "Replace this string with your answer."
+    @occurrences = @text.downcase.split.count(@special_word.downcase)
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +37,13 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    m_int_rate = @apr/100/12
+
+    months = @years*12
+
+    payment = ((m_int_rate/((1+m_int_rate)**months-1))+m_int_rate)*@principal
+
+    @monthly_payment = payment
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +65,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = (@ending - @starting)/60
+    @hours = (@ending-@starting)/3600
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @days/365
 
     # ================================================================================
     # Your code goes above.
@@ -82,31 +87,39 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @sorted_numbers[0]
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @sorted_numbers[@count - 1]
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    @median = if @count.odd?
+        (@sorted_numbers/2)
+    else
+        ((@sorted_numbers[@count/2]) + (@sorted_numbers[@count/2-1]))/2
+    end
 
-    @sum = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @mean = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @variance = "Replace this string with your answer."
+    var = 0
+    @sorted_numbers.each do |variance|
+    var = var + ((variance - @mean)**2)
+end
 
-    @standard_deviation = "Replace this string with your answer."
+    @variance = var/@count
 
-    @mode = "Replace this string with your answer."
+    @standard_deviation = @variance**0.5
 
-    # ================================================================================
-    # Your code goes above.
-    # ================================================================================
+    @freq = @numbers.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+
+    @mode = @numbers.max_by{ |v| @freq[v] }
+
 
     render("descriptive_statistics.html.erb")
   end
