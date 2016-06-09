@@ -10,13 +10,11 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    @word_count = @text.split.count
+
     @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = remove_spaces = @text.gsub(" ","")
-
-    @character_count_without_spaces = remove_spaces.length
-
-    @word_count = @text.split.count
+    @character_count_without_spaces = @text.length - @text.count(" ") - @text.count("\n") - @text.count("\t") - @text.count("\r")
 
     @occurrences = @text.downcase.split.count(@special_word.downcase)
 
@@ -69,7 +67,7 @@ class CalculationsController < ApplicationController
 
     @seconds = @ending - @starting
     @minutes = (@ending - @starting)/60
-    @hours = (@ending-@starting)/60/60
+    @hours = (@ending-@starting)/3600
     @days = @hours/24
     @weeks = @days/7
     @years = @days/365
