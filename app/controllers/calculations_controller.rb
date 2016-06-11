@@ -10,14 +10,29 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    @character_count_with_spaces=@text.size
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @charct_wo_s1=@text.scan(/\w/).inject(Hash.new(0)){|h, c| h[c] += 1; h}
+    # @charct_wo_s2=@text.split(/\S+/).size
+    # @character_count_without_spaces=@charct_wo_s1.to_s + "Total " + @charct_wo_s2.to_s  Hmmmm that didn't work like hoped...
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @Space_Count=@text.count(" ")
+    @char_ct_wo_sp_tot=@character_count_with_spaces - @Space_Count
+    @character_count_without_spaces=@charct_wo_s1.to_s + " or a total of " + @char_ct_wo_sp_tot.to_s
 
-    @word_count = "Replace this string with your answer."
+    @word_count = @text.split.count
+    @occurrences = @text.scan(@special_word).count
 
-    @occurrences = "Replace this string with your answer."
+
+
+    # instructions
+    # @character_count_with_spaces = "Replace this string with your answer."
+
+    # @character_count_without_spaces = "Replace this string with your answer."
+
+    # @word_count = "Replace this string with your answer."
+
+    # @occurrences = "Replace this string with your answer."
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +53,17 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    @p_apr=@apr/100
+
+    @numer=@p_apr*(1+@p_apr)**(@years)
+    @denom=((1+@p_apr)**(@years))-1
+    @PMT_factor=@numer/@denom
+
+    # @numer=@m_apr*(1+@m_apr)**(@years*12)
+    # @denom=((1+@m_apr)**(@years*12))-1
+    # @PMT_factor=@numer/@denom
+
+    @monthly_payment = @PMT_factor*@principal
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +85,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
@@ -84,19 +109,19 @@ class CalculationsController < ApplicationController
 
     @sorted_numbers = "Replace this string with your answer."
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
     @range = "Replace this string with your answer."
 
     @median = "Replace this string with your answer."
 
-    @sum = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @mean = "Replace this string with your answer."
+    @mean = @numbers.sum/@numbers.count
 
     @variance = "Replace this string with your answer."
 
