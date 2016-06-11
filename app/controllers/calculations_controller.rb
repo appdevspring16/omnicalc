@@ -59,6 +59,9 @@ class CalculationsController < ApplicationController
     @denom=((1+@p_apr)**(@years))-1
     @PMT_factor=@numer/@denom
 
+    # @numer=@m_apr*(1+@m_apr)**(@years*12)
+    # @denom=((1+@m_apr)**(@years*12))-1
+    # @PMT_factor=@numer/@denom
 
     @monthly_payment = @PMT_factor*@principal
 
@@ -82,12 +85,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @weeks/52
 
     # ================================================================================
     # Your code goes above.
@@ -106,19 +109,19 @@ class CalculationsController < ApplicationController
 
     @sorted_numbers = "Replace this string with your answer."
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
     @range = "Replace this string with your answer."
 
     @median = "Replace this string with your answer."
 
-    @sum = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @mean = "Replace this string with your answer."
+    @mean = @numbers.sum/@numbers.count
 
     @variance = "Replace this string with your answer."
 
