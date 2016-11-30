@@ -10,14 +10,15 @@ class CalculationsController < ApplicationController
     # The special word the user input is in the string @special_word.
     # ================================================================================
 
+    @text_no_space = @text.gsub(/\s+/, "")
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text_no_space.length
 
-    @word_count = "Replace this string with your answer."
+    @word_count = @text.split.length
 
-    @occurrences = "Replace this string with your answer."
+    @occurrences = @text.split.count(@special_word)
 
     # ================================================================================
     # Your code goes above.
@@ -38,9 +39,18 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    @apr_monthly = @apr/(12*100)
+    @nper = @years*12
 
-    # ================================================================================
+      # =========================================================
+      # Your code to implement the method goes here.
+      # You shouldn't have to write or change code anywhere else.
+      # =========================================================
+
+## to be honest I haven't studied finance, but I get the coding idea!
+    @monthly_payment = (@apr_monthly*@principal)/((1-(1+@apr_monthly))**(1/@nper))
+      #@monthly_payment = ((@principal*@apr_monthly)/((1+@apr_monthly)**@nper)-1)
+    # ================================================================================v
     # Your code goes above.
     # ================================================================================
 
@@ -60,12 +70,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = (@ending - @starting).abs
+    @minutes = @seconds/60
+    @hours = @minutes/60
+    @days = @hours/24
+    @weeks = @days/7
+    @years = @days/365
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +92,76 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @numbers_sorted = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.length
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
     @range = "Replace this string with your answer."
 
     @median = "Replace this string with your answer."
 
-    @sum = "Replace this string with your answer."
+    # SUM
+    # ===
+    # To find the sum of a set of numbers,
+    #  - we start with 0
+    #  - for each number in the set,
+    #   - we add it to the running total
+    #  - after we've looked at every number, the running total is the sum
+    def sum(@numbers)
+      running_total = 0
+      numbers.each do |number|
+      running_total = running_total + number
+    end
 
-    @mean = "Replace this string with your answer."
+      return running_total
+    end
+    # MEAN
+    # ====
+    # To find the mean of a set,
+    #  - we sum up all the elements
+    #  - then we divide the sum by the number of elements in the set
 
-    @variance = "Replace this string with your answer."
+    def mean(@numbers)
+      # Let's re-use the work we did above in the sum method
 
-    @standard_deviation = "Replace this string with your answer."
+      # ====================
+      # Your code goes here.
+      # ====================
+    end
 
-    @mode = "Replace this string with your answer."
+    # VARIANCE
+    # ========
+    # To find the variance of a set,
+    #  - we find the mean of the set
+    #  - for each number in the set,
+    #   - we find the difference between the number and the mean
+    #   - we square the difference
+    #  - the variance is the mean of the squared differences
+
+    def variance(list_of_numbers)
+      # Let's re-use the work we did above in the mean method
+
+      # ====================
+      # Your code goes here.
+      # ====================
+    end
+
+    # STANDARD DEVIATION
+    # ==================
+    # To find the standard deviation of a set,
+    #  - take the square root of the variance
+
+    def standard_deviation(list_of_numbers)
+      # ====================
+      # Your code goes here.
+      # ====================
+    end
+
+    @mode = mode(@sorted_numbers)
 
     # ================================================================================
     # Your code goes above.
