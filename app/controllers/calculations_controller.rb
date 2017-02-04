@@ -11,13 +11,24 @@ class CalculationsController < ApplicationController
     # ================================================================================
 
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @character_count_with_spaces = @text.length
 
-    @character_count_without_spaces = "Replace this string with your answer."
+    @character_count_without_spaces = @text.gsub(/\s+/, "").length
 
-    @word_count = "Replace this string with your answer."
+    @word_count = @text.split.count
 
-    @occurrences = "Replace this string with your answer."
+    @aa = @text.downcase.split
+    @q = 0
+
+    for i in 1..@aa.count
+      if @aa[i-1] == @special_word.downcase
+        @q += 1
+      end
+    end
+
+    @occurrences = @q
+
+    # @text.count('t')
 
     # ================================================================================
     # Your code goes above.
@@ -30,6 +41,7 @@ class CalculationsController < ApplicationController
     @apr = params[:annual_percentage_rate].to_f
     @years = params[:number_of_years].to_i
     @principal = params[:principal_value].to_f
+    @mon_int = @apr/1200
 
     # ================================================================================
     # Your code goes below.
@@ -38,7 +50,8 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    @monthly_payment = (@principal * (@mon_int/(1-(1+@mon_int)**(@years*12*(-1)))))
+
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +73,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending-@starting
+    @minutes = ((@ending-@starting)/60).floor
+    @hours = ((@ending-@starting)/3600).floor
+    @days = (((@ending-@starting)/3600)/24).floor
+    @weeks = ((((@ending-@starting)/3600)/24)/7).floor
+    @years = (((((@ending-@starting)/3600)/24)/7)/365).floor
 
     # ================================================================================
     # Your code goes above.
@@ -82,27 +95,63 @@ class CalculationsController < ApplicationController
     # The numbers the user input are in the array @numbers.
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @numbers.min
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @numbers.max-@numbers.min
 
-    @median = "Replace this string with your answer."
+    @sorted = @numbers.sort
 
-    @sum = "Replace this string with your answer."
+    if @count.even?
+      @xx = (@sorted[(@count/2)-1]+@sorted[(@count/2)])/2
+    else
+      @xx = @sorted[(@count/2)]
+    end
 
-    @mean = "Replace this string with your answer."
+    @median = @xx
 
-    @variance = "Replace this string with your answer."
+    @sum = @numbers.sum
 
-    @standard_deviation = "Replace this string with your answer."
+    @mean = @sum/@count
 
-    @mode = "Replace this string with your answer."
+    @nn = @count-1
+    @rr = 0
+
+    while @nn > -1
+      @rr += (@sorted[@nn]-@mean)**2
+      @nn -= 1
+    end
+
+    @variance = @rr/(@count-1)
+
+    @standard_deviation = @variance**(0.5)
+
+    @ar = []
+    @mm = []
+    for y in 1..(@count)
+      @aq = 0
+      for x in 1..@count
+        if @numbers[y-1] == @numbers[x-1]
+          @aq +=1
+        end
+      end
+      @ar.push(@aq)
+    end
+    @br = []
+    if @ar.max != 1
+      for x in 1..@count
+        if @ar[x] == @ar.max
+          @br.push(@numbers[x])
+        end
+      end
+    end
+
+    @mode = @br.uniq
 
     # ================================================================================
     # Your code goes above.
