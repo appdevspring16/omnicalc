@@ -8,16 +8,16 @@ class CalculationsController < ApplicationController
     # Your code goes below.
     # The text the user input is in the string @text.
     # The special word the user input is in the string @special_word.
+    @text_no_space = @text.gsub(" ", "")
+    @text_word_counter = @text.split.size
     # ================================================================================
+    @character_count_with_spaces = @text.length
 
+    @character_count_without_spaces = @text_no_space.length
 
-    @character_count_with_spaces = "Replace this string with your answer."
+    @word_count = @text_word_counter
 
-    @character_count_without_spaces = "Replace this string with your answer."
-
-    @word_count = "Replace this string with your answer."
-
-    @occurrences = "Replace this string with your answer."
+    @occurrences = "I am not sure how to do this"
 
     # ================================================================================
     # Your code goes above.
@@ -38,7 +38,8 @@ class CalculationsController < ApplicationController
     # The principal value the user input is in the decimal @principal.
     # ================================================================================
 
-    @monthly_payment = "Replace this string with your answer."
+    @monthly_payment = "My code crashes the site. Please see my logic in the comments"
+    # @monthly_payment = ((@principal*(1+(@apr/100))**@years)/(@years*12)
 
     # ================================================================================
     # Your code goes above.
@@ -60,12 +61,12 @@ class CalculationsController < ApplicationController
     #   number of seconds as a result.
     # ================================================================================
 
-    @seconds = "Replace this string with your answer."
-    @minutes = "Replace this string with your answer."
-    @hours = "Replace this string with your answer."
-    @days = "Replace this string with your answer."
-    @weeks = "Replace this string with your answer."
-    @years = "Replace this string with your answer."
+    @seconds = @ending - @starting
+    @minutes =((@ending - @starting)/60).to_i
+    @hours = (@minutes/60).to_i
+    @days = (@hours/24).to_i
+    @weeks = (@days/7).to_i
+    @years = (@weeks/52).to_i
 
     # ================================================================================
     # Your code goes above.
@@ -79,30 +80,35 @@ class CalculationsController < ApplicationController
 
     # ================================================================================
     # Your code goes below.
-    # The numbers the user input are in the array @numbers.
+    def median(descriptive_statistics)
+      sorted = @numbers.sort
+      len = sorted.length
+      (sorted[(len - 1) / 2] + sorted[len / 2]) / 2.0
+    end
+
     # ================================================================================
 
-    @sorted_numbers = "Replace this string with your answer."
+    @sorted_numbers = @numbers.sort
 
-    @count = "Replace this string with your answer."
+    @count = @numbers.count
 
-    @minimum = "Replace this string with your answer."
+    @minimum = @sorted_numbers[0]
 
-    @maximum = "Replace this string with your answer."
+    @maximum = @numbers.max
 
-    @range = "Replace this string with your answer."
+    @range = @maximum - @minimum
 
-    @median = "Replace this string with your answer."
+    @median = median(@numbers)
 
-    @sum = "Replace this string with your answer."
+    @sum = "I did not manage to solve this on my own"
 
-    @mean = "Replace this string with your answer."
+    @mean = "I did not manage to solve this on my own"
 
-    @variance = "Replace this string with your answer."
+    @variance = "I did not manage to solve this on my own"
 
-    @standard_deviation = "Replace this string with your answer."
+    @standard_deviation = "I did not manage to solve this on my own"
 
-    @mode = "Replace this string with your answer."
+    @mode = "I did not manage to solve this on my own"
 
     # ================================================================================
     # Your code goes above.
